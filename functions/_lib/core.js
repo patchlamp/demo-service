@@ -147,6 +147,7 @@ export function page(env, title, body, { status = 200, headers = {}, session = n
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="${esc(site)}'s admin page, for the owner only.">
   <title>${esc(title)} — ${esc(site)}</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>${STYLE}</style>
