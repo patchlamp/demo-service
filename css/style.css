@@ -5,14 +5,14 @@
    ========================================================================== */
 
 :root {
-  /* Color — warm off-white ground, dark ink, one accent */
-  --bg: #faf8f4;
+  /* Color — cool clean ground, deep ink, one water-blue accent */
+  --bg: #f5f8f9;
   --bg-raised: #ffffff;
-  --bg-line: #e6e1d8;
-  --ink: #1d1b17;
-  --ink-dim: #6b665c;
-  --accent: #b4532a;       /* links, highlights, buttons */
-  --accent-dim: #8f3f1e;   /* hover */
+  --bg-line: #dbe4e7;
+  --ink: #14212a;
+  --ink-dim: #5a6a73;
+  --accent: #1d6f8c;       /* links, highlights, buttons */
+  --accent-dim: #155468;   /* hover */
 
   /* Type — system fonts, so nothing loads from a third party */
   --font-display: Georgia, "Times New Roman", serif;
@@ -232,20 +232,35 @@ img, svg { max-width: 100%; display: block; }
 }
 .js-motion .reveal.is-visible { opacity: 1; transform: none; }
 
-/* Demo notice and the quote form */
-.demo-bar { padding: .5rem var(--page-pad); background: var(--ink); color: var(--bg); font-size: .9rem; text-align: center; max-width: none; }
-.demo-bar a { color: var(--bg); }
+/* --------------------------------------------------------------------------
+   Components every kind of site shares (templates/sites/*: only :root
+   differs between them). Forms post to patchlamp.com or, with a database,
+   to the site's own /api/*; cards are a list of short blocks (services,
+   work, events, products).
+   -------------------------------------------------------------------------- */
+
 .site-form { display: grid; gap: .9rem; max-width: 30rem; }
 .site-form label { display: grid; gap: .3rem; }
-.site-form input, .site-form textarea { font: inherit; padding: .6rem .75rem; border: 1px solid var(--bg-line); border-radius: 3px; background: var(--bg-raised); color: var(--ink); }
+.site-form input, .site-form textarea, .site-form select { font: inherit; padding: .6rem .75rem; border: 1px solid var(--bg-line); border-radius: 3px; background: var(--bg-raised); color: var(--ink); }
 .site-form .button { justify-self: start; background: transparent; cursor: pointer; }
 .form-thanks, .form-sorry { font-weight: 600; }
-.service-list { list-style: none; display: grid; gap: var(--space); margin-top: var(--space); }
-@media (min-width: 40rem) { .service-list { grid-template-columns: repeat(2, 1fr); } }
-.service-list li { padding: var(--space); border: 1px solid var(--bg-line); border-radius: 3px; background: var(--bg-raised); }
-.service-list h3 { margin-bottom: .35rem; }
+
+.card-list { list-style: none; display: grid; gap: var(--space); margin-top: var(--space); }
+@media (min-width: 40rem) { .card-list { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 60rem) { .card-list.three { grid-template-columns: repeat(3, 1fr); } }
+.card-list li { padding: var(--space); border: 1px solid var(--bg-line); border-radius: 3px; background: var(--bg-raised); }
+.card-list h3 { margin-bottom: .35rem; }
+.card-list svg { display: block; width: 100%; height: auto; border-radius: 3px; margin-bottom: .75rem; }
+.card-meta { color: var(--ink-dim); font-size: .95rem; }
+.price { font-family: var(--font-display); color: var(--accent); white-space: nowrap; }
+
 .hero .button-row { justify-content: center; }
 .photo-grid svg { display: block; width: 100%; height: auto; border-radius: 3px; }
+
+/* A demo site says so on every page (Patchlamp's demos; a client's own site
+   never has this bar). */
+.demo-bar { margin: 0; max-width: none; padding: .75rem var(--page-pad); background: var(--ink); color: var(--bg); font-size: .9rem; line-height: 1.5; text-align: center; }
+.demo-bar a { color: var(--bg); text-decoration: underline; }
 
 /* Phone tap targets: the nav, the demo bar and the footer are short links,
    and a thumb needs more than the text's own height (shot check flags

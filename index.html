@@ -41,7 +41,7 @@
       <div class="section-inner reveal">
         <p class="kicker">What we do</p>
         <h2>Clear water, working equipment</h2>
-        <ul class="service-list">
+        <ul class="card-list">
           <li><h3>Weekly service</h3><p>Skim, brush, vacuum, test and balance the water, empty the baskets. Same day each week.</p></li>
           <li><h3>Openings &amp; closings</h3><p>Spring start-up and fall winterizing: covers, lines, equipment and the first balance.</p></li>
           <li><h3>Repairs</h3><p>Pumps, heaters, filters and automation. We tell you the price before we start.</p></li>
@@ -54,6 +54,8 @@
       <div class="section-inner reveal">
         <p class="kicker">Book</p>
         <h2>Book a visit</h2>
+        <!-- The times come from the database (booking_slots): open them on /admin/slots, or by text.
+             The calendar block is templates/collections/bookings/booking.html. -->
         <p class="muted">Pick an open time. We'll confirm by email or phone the same day.</p>
         <form class="site-form booking-form" id="book" action="/api/bookings" method="post">
           <fieldset class="booking-slots">
