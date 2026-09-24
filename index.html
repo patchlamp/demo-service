@@ -45,7 +45,8 @@
       <div class="section-inner reveal">
         <p class="kicker">Quotes</p>
         <h2>Ask for a quote</h2>
-        <form class="site-form" id="form" action="https://patchlamp.com/f/demo-service/quote" method="post">
+        <form class="site-form" id="form" action="/api/submissions" method="post">
+          <input type="hidden" name="_form" value="quote">
           <label>Name <input name="name" required autocomplete="name"></label>
           <label>Email <input name="email" type="email" required autocomplete="email"></label>
           <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
