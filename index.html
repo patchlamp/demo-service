@@ -3,20 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Juniper Flats Pool & Spa</title>
-  <meta name="description" content="Juniper Flats Pool & Spa — Pool and spa service, repairs and openings — a Patchlamp demo.">
+  <title>Juniper Flats Pool &amp; Spa — Patchlamp's service demo</title>
+  <meta name="description" content="Juniper Flats Pool &amp; Spa is Patchlamp's demo service business: book a time, ask for a quote, and change the site by text. Not a real company.">
+  <meta name="robots" content="noindex">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <p class="demo-bar">Juniper Flats Pool &amp; Spa is not a real company. This is a demo of what
-  <a href="https://patchlamp.com">Patchlamp</a> builds and keeps up to date by text.</p>
-
+  <p class="demo-bar">
+    <strong>This is a demo.</strong> Juniper Flats Pool &amp; Spa is not a real company — it is
+    <a href="https://patchlamp.com/">Patchlamp's</a> service-business demo. Text the demo number and
+    whatever you ask for changes this site, usually in under a minute. It resets every night.
+  </p>
 
   <header class="site-header">
-    <a class="wordmark" href="index.html">Juniper Flats Pool & Spa</a>
+    <a class="wordmark" href="index.html">Juniper Flats Pool &amp; Spa</a>
     <nav class="site-nav" aria-label="Site">
       <a href="index.html" aria-current="page">Home</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#booking">Book</a>
+      <a href="index.html#quote">Quote</a>
       <a href="photos.html">Photos</a>
     </nav>
   </header>
@@ -24,20 +30,84 @@
   <main>
     <section class="hero">
       <h1 class="hero-title">Juniper Flats Pool &amp; Spa</h1>
-      <p class="hero-tagline">Pool and spa service, repairs and openings — a Patchlamp demo.</p>
+      <p class="hero-tagline">Weekly pool care, spa service and repairs, booked online.</p>
+      <div class="button-row">
+        <a class="button" href="#booking">Book a visit</a>
+        <a class="button" href="#quote">Ask for a quote</a>
+      </div>
     </section>
 
-    <section class="section" id="about">
+    <section class="section" id="services">
       <div class="section-inner reveal">
         <p class="kicker">What we do</p>
         <h2>Clear water, working equipment</h2>
-        <p class="lede">Weekly pool and spa service, spring openings and fall closings,
-        and repairs to pumps, heaters and filters.</p>
-        <p class="muted">Tell us what you need below and we'll get back to you with a quote.</p>
-        <div class="button-row">
-          <a class="button" href="#form">Ask for a quote</a>
-          <a class="button" href="#details">Hours</a>
-        </div>
+        <ul class="service-list">
+          <li><h3>Weekly service</h3><p>Skim, brush, vacuum, test and balance the water, empty the baskets. Same day each week.</p></li>
+          <li><h3>Openings &amp; closings</h3><p>Spring start-up and fall winterizing: covers, lines, equipment and the first balance.</p></li>
+          <li><h3>Repairs</h3><p>Pumps, heaters, filters and automation. We tell you the price before we start.</p></li>
+          <li><h3>Spa care</h3><p>Drain and refill, filter cleaning and a water check for hot tubs.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="booking">
+      <div class="section-inner reveal">
+        <p class="kicker">Book</p>
+        <h2>Book a visit</h2>
+        <p class="muted">Pick an open time. We'll confirm by email or phone the same day.</p>
+        <form class="site-form booking-form" id="book" action="/api/bookings" method="post">
+          <fieldset class="booking-slots">
+            <legend>Pick a time</legend>
+            <div data-slots><p class="muted">Loading the open times…</p></div>
+          </fieldset>
+          <label>Name <input name="name" required autocomplete="name"></label>
+          <label>Email <input name="email" type="email" autocomplete="email"></label>
+          <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
+          <label>Anything we should know? <textarea name="notes" rows="3"></textarea></label>
+          <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button class="button" type="submit">Book it</button>
+          <p class="form-thanks" data-sent="booking" hidden>Booked — we've got you down and we'll confirm by email or phone.</p>
+          <p class="form-sorry" data-sent="full" hidden>That time was just taken or closed. Please pick another.</p>
+          <p class="form-sorry" data-sent="0" hidden>That didn't go through: pick a time, and leave a name and an email or phone.</p>
+          <script>
+            (function () {
+              var form = document.getElementById("book");
+              var box = form.querySelector("[data-slots]");
+              var sent = (location.search.match(/[?&]sent=([a-z0-9-]+)/) || [])[1];
+              if (sent && location.hash === "#book") form.querySelectorAll("[data-sent]").forEach(function (p) { p.hidden = p.getAttribute("data-sent") !== sent; });
+              function at(s) { var p = s.split(/[-T:]/); return new Date(Date.UTC(+p[0], p[1] - 1, +p[2], +p[3], +p[4])); }
+              var day = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", weekday: "long", month: "long", day: "numeric" });
+              var time = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", hour: "numeric", minute: "2-digit" });
+              function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+              fetch("/api/bookings", { headers: { accept: "application/json" } })
+                .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+                .then(function (data) {
+                  box.textContent = "";
+                  if (!data.slots.length) { box.appendChild(el("p", "muted", "No open times right now. Ask for a quote instead and we'll find one.")); return; }
+                  var group = null, last = "";
+                  data.slots.forEach(function (s) {
+                    var d = day.format(at(s.starts_at));
+                    if (d !== last) { group = el("div", "booking-day"); group.appendChild(el("p", "booking-date", d)); box.appendChild(group); last = d; }
+                    var label = el("label", "booking-slot");
+                    var input = el("input"); input.type = "radio"; input.name = "slot"; input.value = s.id; input.required = true;
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(" " + time.format(at(s.starts_at)) + (s.label ? " · " + s.label : "") + (s.places > 1 ? " (" + s.places + " places)" : "")));
+                    group.appendChild(label);
+                  });
+                })
+                .catch(function () { box.textContent = ""; box.appendChild(el("p", "muted", "The calendar didn't load. Please try again in a minute.")); });
+            })();
+          </script>
+          <style>
+            .booking-slots { border: 0; padding: 0; margin: 0; display: grid; gap: .75rem; }
+            .booking-slots legend { font-weight: 600; margin-bottom: .5rem; }
+            .booking-day { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+            .booking-date { flex-basis: 100%; margin: 0; color: var(--ink-dim); }
+            .booking-slot { display: inline-flex !important; align-items: center; gap: .4rem; padding: .45rem .8rem; min-height: 44px;
+              border: 1px solid var(--bg-line); border-radius: 3px; background: var(--bg-raised); cursor: pointer; }
+            .booking-slot input { width: auto; }
+          </style>
+        </form>
       </div>
     </section>
 
@@ -45,6 +115,7 @@
       <div class="section-inner reveal">
         <p class="kicker">Quotes</p>
         <h2>Ask for a quote</h2>
+        <p class="muted">A repair, a new heater, a season of weekly service — tell us what you need.</p>
         <form class="site-form" id="form" action="/api/submissions" method="post">
           <input type="hidden" name="_form" value="quote">
           <label>Name <input name="name" required autocomplete="name"></label>
@@ -58,8 +129,8 @@
           <script>
             (function () {
               var f = document.getElementById("form"), q = location.search;
-              if (/[?&]sent=0/.test(q)) f.querySelector(".form-sorry").hidden = false;
-              else if (/[?&]sent=/.test(q)) f.querySelector(".form-thanks").hidden = false;
+              if (/[?&]sent=0/.test(q) && location.hash === "#form") f.querySelector(".form-sorry").hidden = false;
+              else if (/[?&]sent=quote/.test(q)) f.querySelector(".form-thanks").hidden = false;
             })();
           </script>
         </form>
@@ -85,7 +156,7 @@
           </div>
           <div>
             <h3>Contact</h3>
-            <p>Use the quote form above.</p>
+            <p>Book a time or ask for a quote above.</p>
           </div>
         </div>
       </div>
@@ -93,7 +164,8 @@
   </main>
 
   <footer class="site-footer">
-    <p class="copyright">&copy; 2026 Juniper Flats Pool & Spa</p>
+    <!-- Keep this footer identical on every page. -->
+    <p class="copyright">&copy; 2026 Juniper Flats Pool &amp; Spa · a demo by <a href="https://patchlamp.com">Patchlamp</a> · <a href="/admin">Owner sign-in</a></p>
   </footer>
 
   <script src="js/main.js"></script>

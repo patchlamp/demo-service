@@ -3,4 +3,8 @@
 // its own file, not here. A second list on the same table (customers and
 // jobs on `records`) is a copy of the view with a `filter`, imported here.
 import submissions from "./submissions.js";
-export default { submissions };
+import bookings from "./bookings.js";
+import slots from "./slots.js";
+import customers from "./customers.js";
+import jobs from "./jobs.js";
+export default { submissions, bookings, slots, customers, jobs };

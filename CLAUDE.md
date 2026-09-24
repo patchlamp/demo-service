@@ -117,6 +117,28 @@ this repo also holds:
 git. A new migration goes live with `db migrate` *before* the publish that
 needs it. `/admin` pages are never indexed and never cached.
 
+### This site's lists (what's on /admin, and the texts that change them)
+
+| list | table | on the site |
+|---|---|---|
+| Quote requests | `submissions` (form `quote`) | the quote form, `#quote` |
+| Bookings | `bookings` | the calendar, `#booking` (`POST /api/bookings`) |
+| Open times | `booking_slots` | the calendar lists the open ones from `GET /api/bookings` |
+| Customers, Jobs | `records` (kind `customer`, `job`) | not shown; the owner's own lists |
+
+**The calendar reads the database live**, so opening or closing a time is
+one `db exec` and no publish — it is on the site the moment the row is:
+
+- "add Tuesday 9am as a booking slot" → the next Tuesday, on the site's own
+  clock, say the date back:
+  `db exec "INSERT INTO booking_slots (starts_at, minutes, capacity, label) VALUES ('2026-09-29T09:00', 60, 1, 'Weekly service')"`,
+  then `curl -s https://demo-service.pages.dev/api/bookings` shows it.
+- close one: `db exec "UPDATE booking_slots SET status = 'closed' WHERE id = N"`.
+- who's booked: `db query "SELECT starts_at, name, status FROM bookings ORDER BY starts_at"`.
+
+`seed.sql` (root, never served) is the golden rows the nightly reset puts
+back. Don't edit it for a texted change; only a change to golden does.
+
 ## Hosting (for Taylor)
 
 Cloudflare Pages, one project per site, published by `site publish` from

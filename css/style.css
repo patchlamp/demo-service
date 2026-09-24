@@ -240,3 +240,9 @@ img, svg { max-width: 100%; display: block; }
 .site-form input, .site-form textarea { font: inherit; padding: .6rem .75rem; border: 1px solid var(--bg-line); border-radius: 3px; background: var(--bg-raised); color: var(--ink); }
 .site-form .button { justify-self: start; background: transparent; cursor: pointer; }
 .form-thanks, .form-sorry { font-weight: 600; }
+.service-list { list-style: none; display: grid; gap: var(--space); margin-top: var(--space); }
+@media (min-width: 40rem) { .service-list { grid-template-columns: repeat(2, 1fr); } }
+.service-list li { padding: var(--space); border: 1px solid var(--bg-line); border-radius: 3px; background: var(--bg-raised); }
+.service-list h3 { margin-bottom: .35rem; }
+.hero .button-row { justify-content: center; }
+.photo-grid svg { display: block; width: 100%; height: auto; border-radius: 3px; }
