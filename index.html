@@ -4,11 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Juniper Flats Pool & Spa</title>
-  <!-- REPLACE-ME: one sentence about Juniper Flats Pool & Spa for search results. -->
   <meta name="description" content="Juniper Flats Pool & Spa — Pool and spa service, repairs and openings — a Patchlamp demo.">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+  <p class="demo-bar">Juniper Flats Pool &amp; Spa is not a real company. This is a demo of what
+  <a href="https://patchlamp.com">Patchlamp</a> builds and keeps up to date by text.</p>
+
 
   <header class="site-header">
     <a class="wordmark" href="index.html">Juniper Flats Pool & Spa</a>
@@ -20,73 +23,68 @@
 
   <main>
     <section class="hero">
-      <h1 class="hero-title">Juniper Flats Pool & Spa</h1>
-      <!-- REPLACE-ME: placeholder tagline — swap for the client's own line. -->
+      <h1 class="hero-title">Juniper Flats Pool &amp; Spa</h1>
       <p class="hero-tagline">Pool and spa service, repairs and openings — a Patchlamp demo.</p>
     </section>
 
     <section class="section" id="about">
       <div class="section-inner reveal">
-        <div class="about-grid">
-          <!-- Main photo. To set it, put a JPG in images/ and change the
-               src and alt here (see CLAUDE.md, "How to add a photo"). Until
-               there is one, this figure shows a plain placeholder. -->
-          <figure class="about-photo">
-            <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img"
-                 aria-label="Placeholder for a photo of Juniper Flats Pool & Spa">
-              <rect width="400" height="400" fill="#e6e1d8"/>
-              <circle cx="200" cy="160" r="60" fill="#faf8f4"/>
-              <path d="M80 340 Q200 220 320 340 Z" fill="#faf8f4"/>
-            </svg>
-          </figure>
-          <div class="about-text">
-            <p class="kicker">About</p>
-            <h2>Who we are</h2>
-            <!-- REPLACE-ME: placeholder text. Get the real story from the
-                 client: what they do, where, since when. Two short paragraphs
-                 is plenty. Keep the voice plain; no hype. -->
-            <p class="lede">This paragraph is placeholder text for Juniper Flats Pool & Spa. It
-            should say, in a sentence or two, what they do and who it's for.</p>
-            <p class="muted">A second short paragraph can go here: how it
-            started, what makes it theirs. Delete it if there's nothing to say.</p>
-            <div class="button-row">
-              <a class="button" href="photos.html">See photos</a>
-              <a class="button" href="#details">Find us</a>
-            </div>
-          </div>
+        <p class="kicker">What we do</p>
+        <h2>Clear water, working equipment</h2>
+        <p class="lede">Weekly pool and spa service, spring openings and fall closings,
+        and repairs to pumps, heaters and filters.</p>
+        <p class="muted">Tell us what you need below and we'll get back to you with a quote.</p>
+        <div class="button-row">
+          <a class="button" href="#form">Ask for a quote</a>
+          <a class="button" href="#details">Hours</a>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="quote">
+      <div class="section-inner reveal">
+        <p class="kicker">Quotes</p>
+        <h2>Ask for a quote</h2>
+        <form class="site-form" id="form" action="https://patchlamp.com/f/demo-service/quote" method="post">
+          <label>Name <input name="name" required autocomplete="name"></label>
+          <label>Email <input name="email" type="email" required autocomplete="email"></label>
+          <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
+          <label>What do you need? <textarea name="message" rows="4" required></textarea></label>
+          <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button class="button" type="submit">Send</button>
+          <p class="form-thanks" hidden>Thanks — we've got it and we'll be in touch.</p>
+          <p class="form-sorry" hidden>That didn't go through. Please try again.</p>
+          <script>
+            (function () {
+              var f = document.getElementById("form"), q = location.search;
+              if (/[?&]sent=0/.test(q)) f.querySelector(".form-sorry").hidden = false;
+              else if (/[?&]sent=/.test(q)) f.querySelector(".form-thanks").hidden = false;
+            })();
+          </script>
+        </form>
       </div>
     </section>
 
     <section class="section" id="details">
       <div class="section-inner reveal">
         <p class="kicker">Details</p>
-        <h2>Find us</h2>
-        <!-- REPLACE-ME: every line below is a placeholder. Ask the client for
-             the real address, hours and contact details; delete any card
-             they don't want shown. -->
+        <h2>Hours</h2>
         <div class="details-grid">
           <div>
-            <h3>Where</h3>
-            <address>
-              123 Example Street<br>
-              Somewhere, ST 00000
-            </address>
-          </div>
-          <div>
-            <h3>Hours</h3>
+            <h3>Service days</h3>
             <ul>
-              <li>Mon–Fri: 9am–5pm</li>
-              <li>Sat: 10am–2pm</li>
+              <li>Mon–Fri: 8am–5pm</li>
+              <li>Sat: 9am–1pm</li>
               <li>Sun: closed</li>
             </ul>
           </div>
           <div>
+            <h3>Where</h3>
+            <p>A made-up company, so no address. The real version of this box says where they work.</p>
+          </div>
+          <div>
             <h3>Contact</h3>
-            <ul>
-              <li><a href="mailto:hello@example.com">hello@example.com</a></li>
-              <li><a href="tel:+10000000000">(000) 000-0000</a></li>
-            </ul>
+            <p>Use the quote form above.</p>
           </div>
         </div>
       </div>
@@ -94,11 +92,6 @@
   </main>
 
   <footer class="site-footer">
-    <!-- REPLACE-ME: the client's real social links; delete the ones they don't use. -->
-    <ul class="footer-links">
-      <li><a href="https://instagram.com/">Instagram</a></li>
-      <li><a href="https://facebook.com/">Facebook</a></li>
-    </ul>
     <p class="copyright">&copy; 2026 Juniper Flats Pool & Spa</p>
   </footer>
 
