@@ -25,3 +25,24 @@ INSERT INTO records (kind, title, status, notes) VALUES
   ('customer', 'Robin Sample', 'open', 'Spa only. Heater repair pending.'),
   ('job', 'Replace pump seal — Sam Example', 'done', 'Parts on the truck.'),
   ('job', 'Heater diagnosis — Robin Sample', 'open', 'Booked through the calendar.');
+
+-- Routes (B40): a week of stops around today; today is under way.
+WITH s(k, stop, customer, job, area, status) AS (VALUES
+  (-1, 1, 'Sam Example', 'Weekly service', 'North bench', 'done'),
+  (-1, 2, 'Casey Demo', 'Weekly service', 'North bench', 'done'),
+  (-1, 3, 'Jordan Placeholder', 'Filter clean', 'Old town', 'done'),
+  (-1, 4, 'Avery Sample', 'Weekly service', 'Old town', 'skipped'),
+  (0, 1, 'Robin Sample', 'Heater check', 'East hills', 'done'),
+  (0, 2, 'Morgan Example', 'Weekly service', 'East hills', 'done'),
+  (0, 3, 'Riley Placeholder', 'Weekly service', 'East hills', 'done'),
+  (0, 4, 'Quinn Demo', 'Green-to-clean', 'Canal road', 'skipped'),
+  (0, 5, 'Taylor Sample', 'Weekly service', 'Canal road', 'to do'),
+  (0, 6, 'Drew Example', 'Salt cell clean', 'Canal road', 'to do'),
+  (0, 7, 'Jamie Placeholder', 'Weekly service', 'North bench', 'to do'),
+  (1, 1, 'Sam Example', 'Weekly service', 'North bench', 'to do'),
+  (1, 2, 'Casey Demo', 'Pump seal', 'North bench', 'to do'),
+  (1, 3, 'Avery Sample', 'Weekly service', 'Old town', 'to do'),
+  (2, 1, 'Morgan Example', 'Weekly service', 'East hills', 'to do'),
+  (2, 2, 'Drew Example', 'Weekly service', 'Canal road', 'to do'))
+INSERT INTO routes (day, stop, customer, job, area, status)
+SELECT date('now', '-6 hours', k || ' days'), stop, customer, job, area, status FROM s;

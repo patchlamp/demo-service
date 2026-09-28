@@ -7,4 +7,5 @@ import bookings from "./bookings.js";
 import slots from "./slots.js";
 import customers from "./customers.js";
 import jobs from "./jobs.js";
-export default { submissions, bookings, slots, customers, jobs };
+import routes from "./routes.js";
+export default { submissions, bookings, slots, customers, jobs, routes };

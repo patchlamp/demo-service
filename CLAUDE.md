@@ -125,6 +125,7 @@ needs it. `/admin` pages are never indexed and never cached.
 | Bookings | `bookings` | the calendar, `#booking` (`POST /api/bookings`) |
 | Open times | `booking_slots` | the calendar lists the open ones from `GET /api/bookings` |
 | Customers, Jobs | `records` (kind `customer`, `job`) | not shown; the owner's own lists |
+| Routes | `routes` (a web tool, B40: `claude-tools/templates/tools/routes/`) | not shown; the day's stops in order, done or skipped, on `/admin/routes` |
 
 **The calendar reads the database live**, so opening or closing a time is
 one `db exec` and no publish — it is on the site the moment the row is:
@@ -135,6 +136,15 @@ one `db exec` and no publish — it is on the site the moment the row is:
   then `curl -s https://demo-service.pages.dev/api/bookings` shows it.
 - close one: `db exec "UPDATE booking_slots SET status = 'closed' WHERE id = N"`.
 - who's booked: `db query "SELECT starts_at, name, status FROM bookings ORDER BY starts_at"`.
+
+**Routes** (the web tool, built from "keep my pool routes: stops per day,
+done or skipped"; `/admin/routes` opens on today with a totals line and a
+one-tap done / skipped per stop). No publish for any of these:
+
+- "what's on today?" → `db query "SELECT stop, customer, job, status FROM routes WHERE day = date('now','-6 hours') ORDER BY stop"`
+- "Taylor Sample's done" → `db exec "UPDATE routes SET status = 'done', updated_at = strftime('%Y-%m-%dT%H:%M:%SZ','now') WHERE day = date('now','-6 hours') AND customer = 'Taylor Sample'"`
+- "skip Drew, gate locked" → the same with `status = 'skipped', notes = 'gate locked'`
+- "add Casey Friday, stop 3" → `db exec "INSERT INTO routes (day, stop, customer, job) VALUES ('YYYY-MM-DD', 3, 'Casey Demo', 'Weekly service')"`; say the date back.
 
 `seed.sql` (root, never served) is the golden rows the nightly reset puts
 back. Don't edit it for a texted change; only a change to golden does.
