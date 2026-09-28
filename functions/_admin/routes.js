@@ -15,11 +15,6 @@ export default {
     { name: "job", label: "Job (weekly service, filter clean…)" },
     { name: "area", label: "Area" },
   ],
-  edit: [
-    { name: "status", label: "Status", type: "select" },
-    { name: "stop", label: "Stop number", type: "number" },
-    { name: "day", label: "Day", type: "date" },
-    { name: "notes", label: "Notes (only you see these)", type: "textarea" },
-  ],
+  edit: ["status", "stop", "day", "notes"],
   touch: "updated_at",
 };
