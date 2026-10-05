@@ -1,20 +1,22 @@
-// Jobs: the records table, kind = job.
+// How /admin shows every job in the customer book, newest first. A job is
+// added on its customer's page (/admin/customers/<id>) or by text
+// (`db jobs add`); here the owner finds one and marks it done.
 export default {
-  table: "records",
-  filter: { kind: "job" },
+  table: "jobs",
   title: "Jobs",
   singular: "job",
-  list: [["title", "Job"], ["notes", "Notes"], ["status", "Status"], ["updated_at", "Changed"], ["created_at", "Added"]],
-  json: "data",
-  statuses: ["open", "done", "archived"],
-  create: [
-    { name: "title", label: "Job", required: true },
-    { name: "notes", label: "Notes", type: "textarea" },
-  ],
+  list: [["date", "Date"], ["customer_name", "Customer"], ["what", "Job"], ["amount_cents", "Amount"], ["status", "Status"]],
+  search: ["customer_name", "what", "notes"],
+  statuses: ["booked", "done", "cancelled"],
+  order: ["date", "desc"],
+  sum: ["amount_cents"],
+  quick: ["done"],
   edit: [
-    { name: "title", label: "Job" },
     { name: "status", label: "Status", type: "select" },
-    { name: "notes", label: "Notes", type: "textarea" },
+    { name: "date", label: "Date", type: "date" },
+    { name: "what", label: "Job" },
+    { name: "amount_cents", label: "Amount (cents: 45000 = $450.00)", type: "number" },
+    "notes",
   ],
   touch: "updated_at",
 };

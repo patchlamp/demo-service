@@ -124,7 +124,7 @@ needs it. `/admin` pages are never indexed and never cached.
 | Quote requests | `submissions` (form `quote`) | the quote form, `#quote` |
 | Bookings | `bookings` | the calendar, `#booking` (`POST /api/bookings`) |
 | Open times | `booking_slots` | the calendar lists the open ones from `GET /api/bookings` |
-| Customers, Jobs | `records` (kind `customer`, `job`) | not shown; the owner's own lists |
+| Customers, Jobs | `customers`, `jobs` (the customer book, B122: `claude-tools/templates/collections/customers/`) | not shown; `/admin/customers` (the jobs under each, Import a CSV) and `/admin/jobs` |
 | Routes | `routes` (a web tool, B40: `claude-tools/templates/tools/routes/`) | not shown; the day's stops in order, done or skipped, on `/admin/routes` |
 
 **The calendar reads the database live**, so opening or closing a time is
@@ -136,6 +136,19 @@ one `db exec` and no publish — it is on the site the moment the row is:
   then `curl -s https://demo-service.pages.dev/api/bookings` shows it.
 - close one: `db exec "UPDATE booking_slots SET status = 'closed' WHERE id = N"`.
 - who's booked: `db query "SELECT starts_at, name, status FROM bookings ORDER BY starts_at"`.
+
+**The customer book** (B122): each customer once, matched by phone or
+email, with the jobs done for them and a last-seen date. By text:
+
+- "who is 555-0142" → `db customers find 555-0142`; "when did we last do
+  Robin" → `db customers show Robin`.
+- "who haven't I seen in 90 days" → `db customers lapsed` (the sample
+  rows have two: Parker Example and Jamie Placeholder).
+- "did Sam's pool today, $85" → `db jobs add Sam "Weekly service" --status
+  done --amount 85`; "done with Robin's heater" → `db jobs done Robin`.
+- a spreadsheet of customers → `db customers import incoming/<file>
+  --dry-run`, say the mapping back, then without `--dry-run`.
+- "send me my customers" → `db customers export`, then SEND-FILE the CSV.
 
 **Routes** (the web tool, built from "keep my pool routes: stops per day,
 done or skipped"; `/admin/routes` opens on today with a totals line and a

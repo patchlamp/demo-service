@@ -20,11 +20,20 @@ INSERT INTO submissions (form, name, email, phone, message, fields, status) VALU
    '{"name":"Jordan Placeholder","email":"jordan@example.com","phone":"555-0110","message":"Quote for weekly service, 18x36 pool, June to September."}', 'new'),
   ('quote', 'Casey Demo', 'casey@example.com', NULL, 'New variable-speed pump, the old one is loud.',
    '{"name":"Casey Demo","email":"casey@example.com","message":"New variable-speed pump, the old one is loud."}', 'replied');
-INSERT INTO records (kind, title, status, notes) VALUES
-  ('customer', 'Sam Example', 'open', 'Weekly service, Mondays. 16x32 pool, salt system.'),
-  ('customer', 'Robin Sample', 'open', 'Spa only. Heater repair pending.'),
-  ('job', 'Replace pump seal — Sam Example', 'done', 'Parts on the truck.'),
-  ('job', 'Heater diagnosis — Robin Sample', 'open', 'Booked through the calendar.');
+-- The customer book (B122): four customers, the jobs done for them. Two were
+-- seen lately, two not in 90 days, so "who haven't I seen in 90 days" has an
+-- answer. Phones and emails match the bookings above.
+INSERT INTO customers (name, phone, phone_key, email, address, notes, tags, source, last_seen) VALUES
+  ('Sam Example', '555-0142', '5550142', 'sam@example.com', NULL, 'Weekly service, Mondays. 16x32 pool, salt system.', 'weekly', 'records', date('now', '-6 hours', '-7 days')),
+  ('Robin Sample', '555-0187', '5550187', 'robin@example.com', NULL, 'Spa only. Heater repair pending.', 'spa', 'records', date('now', '-6 hours', '-40 days')),
+  ('Parker Example', '555-0171', '5550171', 'parker@example.com', NULL, 'Green-to-clean last spring; asked about weekly service.', NULL, 'admin', date('now', '-6 hours', '-130 days')),
+  ('Jamie Placeholder', '555-0164', '5550164', 'jamie@example.com', NULL, 'Season close every October.', 'seasonal', 'admin', date('now', '-6 hours', '-110 days'));
+INSERT INTO jobs (customer_id, customer_name, date, what, amount_cents, status, notes, source) VALUES
+  (1, 'Sam Example', date('now', '-6 hours', '-7 days'), 'Replace pump seal', 18000, 'done', 'Parts on the truck.', 'admin'),
+  (2, 'Robin Sample', date('now', '-6 hours', '-40 days'), 'Spa clean', 9500, 'done', NULL, 'admin'),
+  (2, 'Robin Sample', date('now', '-6 hours', '+5 days'), 'Heater diagnosis', NULL, 'booked', 'Booked through the calendar.', 'admin'),
+  (3, 'Parker Example', date('now', '-6 hours', '-130 days'), 'Green-to-clean', 35000, 'done', NULL, 'admin'),
+  (4, 'Jamie Placeholder', date('now', '-6 hours', '-110 days'), 'Season close', 25000, 'done', NULL, 'admin');
 
 -- Routes (B40): a week of stops around today; today is under way.
 WITH s(k, stop, customer, job, area, status) AS (VALUES
