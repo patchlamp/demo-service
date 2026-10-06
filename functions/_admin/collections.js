@@ -8,4 +8,5 @@ import slots from "./slots.js";
 import customers from "./customers.js";
 import jobs from "./jobs.js";
 import routes from "./routes.js";
-export default { submissions, bookings, slots, customers, jobs, routes };
+import estimates from "./estimates.js";
+export default { submissions, bookings, slots, customers, jobs, routes, estimates };
