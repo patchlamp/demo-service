@@ -13,7 +13,7 @@
 //   env.BOOKINGS_FEED_KEY  the calendar feed's key (/api/bookings.ics?key=…),
 //                          also kept in the site registry (sites.json).
 import { esc, localTime, localNow, now, page } from "./core.js";
-import { recordCustomer, addJob } from "./customers.js";
+import { recordCustomer, addJob, markDone, emailKey } from "./customers.js";
 
 export const TAKEN = "('requested', 'confirmed')";      // the statuses that hold a place
 const enc = new TextEncoder();
@@ -189,6 +189,14 @@ const JOB = { requested: "booked", confirmed: "booked", cancelled: "cancelled", 
 // A booking isn't a visit, so last_seen waits for the job to be marked done
 // (addJob with status "done" moves it). Quiet on a site without the book;
 // never stops a booking.
+//
+// B156: a booking by a customer with an open estimate (sent and in date, or
+// accepted with its job still booked) joins it instead of making a second job.
+// The link is estimates.booking_id. When the estimate already has its job, that
+// job takes the booking's day and status (a cancelled booking unlinks and leaves
+// the accepted work booked); when it doesn't yet, the booking's own job is made
+// as usual and `estimate sync` adopts it (bin/estimate follow_through). A new
+// customer, or one with no open estimate, gets a new job as before.
 export async function recordBooking(env, booking) {
   try {
     const c = await recordCustomer(env, {
@@ -197,14 +205,63 @@ export async function recordBooking(env, booking) {
     if (!c) return null;
     const slot = booking.slot_id
       ? await env.DB.prepare("SELECT label FROM booking_slots WHERE id = ?").bind(booking.slot_id).first() : null;
-    return await addJob(env, {
-      customer_id: c.id, date: String(booking.starts_at).slice(0, 10), what: (slot && slot.label) || "Booking",
-      status: JOB[booking.status] || "booked", source: "booking", ref: String(booking.id),
+    const status = JOB[booking.status] || "booked";
+    const date = String(booking.starts_at).slice(0, 10);
+    const own = await env.DB.prepare("SELECT id FROM jobs WHERE source = 'booking' AND ref = ? LIMIT 1").bind(String(booking.id)).first();
+    if (!own) {
+      const est = await openEstimate(env, c.id, booking);
+      if (est && est.job_id) {
+        if (status === "cancelled") {
+          await env.DB.prepare("UPDATE estimates SET booking_id = NULL WHERE id = ? AND booking_id = ?").bind(est.id, booking.id).run();
+          return { id: est.job_id, created: false, estimate: est.number };
+        }
+        await env.DB.prepare("UPDATE jobs SET date = ?, status = 'booked', updated_at = strftime('%Y-%m-%dT%H:%M:%SZ', 'now') WHERE id = ?")
+          .bind(date, est.job_id).run();
+        if (status === "done") await markDone(env, est.job_id);
+        await env.DB.prepare("UPDATE estimates SET booking_id = ? WHERE id = ? AND booking_id IS NULL").bind(booking.id, est.id).run();
+        return { id: est.job_id, created: false, estimate: est.number };
+      }
+      if (est) {
+        await env.DB.prepare("UPDATE estimates SET booking_id = ? WHERE id = ? AND booking_id IS NULL").bind(booking.id, est.id).run();
+      } else if (status === "cancelled") {
+        return null;                      // a cancelled booking that never had a job doesn't make one
+      }
+    }
+    const job = await addJob(env, {
+      customer_id: c.id, date, what: (slot && slot.label) || "Booking",
+      status, source: "booking", ref: String(booking.id),
     });
+    if (own && status === "cancelled" && (await hasEstimates(env))) {
+      // the visit was called off before the estimate was accepted: `estimate sync` must not adopt a
+      // cancelled job, so the estimate lets go of the booking and files its own job when accepted
+      await env.DB.prepare("UPDATE estimates SET booking_id = NULL WHERE booking_id = ? AND job_id IS NULL").bind(booking.id).run();
+    }
+    return job;
   } catch (e) {
     console.error(`customer book: ${e}`);
     return null;
   }
+}
+
+// The estimate this booking belongs to: the one already linked to it, else this
+// customer's newest open one (sent and in date, or accepted with its job still
+// booked) that has no booking yet. Null on a site without estimates.
+async function hasEstimates(env) {
+  return !!(await env.DB.prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'estimates'").first());
+}
+
+async function openEstimate(env, customerId, booking) {
+  if (!(await hasEstimates(env))) return null;
+  const linked = await env.DB.prepare("SELECT id, number, job_id FROM estimates WHERE booking_id = ? LIMIT 1").bind(booking.id).first();
+  if (linked) return linked;
+  const today = localNow(env).slice(0, 10);
+  return env.DB.prepare(
+    `SELECT e.id, e.number, e.job_id FROM estimates e LEFT JOIN jobs j ON j.id = e.job_id
+      WHERE e.booking_id IS NULL AND (e.customer_id = ? OR (e.email IS NOT NULL AND lower(trim(e.email)) = ?))
+        AND ((e.status = 'sent' AND (e.valid_until IS NULL OR e.valid_until >= ?))
+          OR (e.status = 'accepted' AND (e.job_id IS NULL OR j.status = 'booked')))
+      ORDER BY e.id DESC LIMIT 1`
+  ).bind(customerId, emailKey(booking.email) || "-", today).first();
 }
 
 // ---------------------------------------------------------------- the calendar feed
