@@ -11,11 +11,9 @@
 //         The owner is emailed through patchlamp.com like a form (form
 //         `estimate-accepted`, no customer email in it, so nothing answers
 //         the customer automatically); the page says the business has been
-//         told only when that post succeeded. The relay picks the post up from
-//         patchlamp.com's queue and runs `estimate sync` once for it (B156): the
-//         invoice or deposit link on the owner's Stripe and the job in the
-//         customer book, then texts the owner who accepted what; the booking
-//         waits for a time the owner and the customer agree.
+//         told only when that post succeeded; `estimate sync` (Patch, by text) does
+//         the rest: the invoice or deposit link on the owner's Stripe, the
+//         customer book, and the booking once a time is agreed.
 //
 // The token is 32 random characters made by `estimate new`; there is no list
 // of estimates anywhere public. Unknown token, a draft or a void estimate:
@@ -137,7 +135,7 @@ export async function onRequestPost({ request, params, env }) {
     const origin = env.MAIL_ORIGIN || new URL(request.url).origin;
     const fields = { estimate: now.number, customer: now.customer, accepted_by: name, total: money(now.total_cents),
                      deposit: now.deposit_cents ? money(now.deposit_cents) : "none",
-                     next: "Patch files the job in your customer book and texts you what it did" };
+                     next: "Text Patch: estimate sync (the invoice or deposit link, the customer book)" };
     try {
       const r = await fetch(`${base}/f/${encodeURIComponent(env.PATCHLAMP_SLUG)}/estimate-accepted`, {
         method: "POST", body: new URLSearchParams(fields), signal: AbortSignal.timeout(5000),
