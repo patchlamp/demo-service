@@ -54,10 +54,62 @@
       <div class="section-inner reveal">
         <p class="kicker">Book</p>
         <h2>Book a visit</h2>
-        <div class="static-contact" data-static="book">
-          <p>Call (801) 555-0142 to book, and tell us the day and time that suit you. Or email founder@patchlamp.com.</p>
-          <p class="button-row"><a class="button" href="tel:+18015550142">Call (801) 555-0142</a> <a class="button" href="mailto:founder@patchlamp.com">Email us</a></p>
-        </div>
+        <!-- The times come from the database (booking_slots): open them on /admin/slots, or by text.
+             The calendar block is templates/collections/bookings/booking.html. -->
+        <p class="muted">Pick an open time. We'll confirm by email or phone the same day.</p>
+        <form class="site-form booking-form" id="book" action="/api/bookings" method="post">
+          <fieldset class="booking-slots">
+            <legend>Pick a time</legend>
+            <div data-slots><p class="muted">Loading the open times…</p></div>
+          </fieldset>
+          <label>Name <input name="name" required autocomplete="name"></label>
+          <label>Email <input name="email" type="email" autocomplete="email"></label>
+          <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
+          <label>Anything we should know? <textarea name="notes" rows="3"></textarea></label>
+          <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button class="button" type="submit">Book it</button>
+          <p class="form-thanks" data-sent="booking" hidden>Got it, your request is in. We'll confirm by email or phone, and if you left an email, a copy with a link to move or cancel it is on its way.</p>
+          <p class="form-sorry" data-sent="full" hidden>That time was just taken or closed. Please pick another.</p>
+          <p class="form-sorry" data-sent="0" hidden>That didn't go through: pick a time, and leave a name and an email or phone.</p>
+          <script>
+            (function () {
+              var form = document.getElementById("book");
+              var box = form.querySelector("[data-slots]");
+              var sent = (location.search.match(/[?&]sent=([a-z0-9-]+)/) || [])[1];
+              if (sent && location.hash === "#book") form.querySelectorAll("[data-sent]").forEach(function (p) { p.hidden = p.getAttribute("data-sent") !== sent; });
+              function at(s) { var p = s.split(/[-T:]/); return new Date(Date.UTC(+p[0], p[1] - 1, +p[2], +p[3], +p[4])); }
+              var day = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", weekday: "long", month: "long", day: "numeric" });
+              var time = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", hour: "numeric", minute: "2-digit" });
+              function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+              fetch("/api/bookings", { headers: { accept: "application/json" } })
+                .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+                .then(function (data) {
+                  box.textContent = "";
+                  if (!data.slots.length) { box.appendChild(el("p", "muted", "No open times right now. Ask for a quote instead and we'll find one.")); return; }
+                  var group = null, last = "";
+                  data.slots.forEach(function (s) {
+                    var d = day.format(at(s.starts_at));
+                    if (d !== last) { group = el("div", "booking-day"); group.appendChild(el("p", "booking-date", d)); box.appendChild(group); last = d; }
+                    var label = el("label", "booking-slot");
+                    var input = el("input"); input.type = "radio"; input.name = "slot"; input.value = s.id; input.required = true;
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(" " + time.format(at(s.starts_at)) + (s.label ? " · " + s.label : "") + (s.places > 1 ? " (" + s.places + " places)" : "")));
+                    group.appendChild(label);
+                  });
+                })
+                .catch(function () { box.textContent = ""; box.appendChild(el("p", "muted", "The calendar didn't load. Please try again in a minute.")); });
+            })();
+          </script>
+          <style>
+            .booking-slots { border: 0; padding: 0; margin: 0; display: grid; gap: .75rem; }
+            .booking-slots legend { font-weight: 600; margin-bottom: .5rem; }
+            .booking-day { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+            .booking-date { flex-basis: 100%; margin: 0; color: var(--ink-dim); }
+            .booking-slot { display: inline-flex !important; align-items: center; gap: .4rem; padding: .45rem .8rem; min-height: 44px;
+              border: 1px solid var(--bg-line); border-radius: 3px; background: var(--bg-raised); cursor: pointer; }
+            .booking-slot input { width: 1.5rem; height: 1.5rem; margin: 0; padding: 0; }
+          </style>
+        </form>
       </div>
     </section>
 
@@ -65,10 +117,25 @@
       <div class="section-inner reveal">
         <p class="kicker">Quotes</p>
         <h2>Ask for a quote</h2>
-        <div class="static-contact" data-static="ask">
-          <p>Call (801) 555-0142 or email founder@patchlamp.com and tell us what you need.</p>
-          <p class="button-row"><a class="button" href="tel:+18015550142">Call (801) 555-0142</a> <a class="button" href="mailto:founder@patchlamp.com">Email us</a></p>
-        </div>
+        <p class="muted">A repair, a new heater, a season of weekly service — tell us what you need.</p>
+        <form class="site-form" id="form" action="/api/submissions" method="post">
+          <input type="hidden" name="_form" value="quote">
+          <label>Name <input name="name" required autocomplete="name"></label>
+          <label>Email <input name="email" type="email" required autocomplete="email"></label>
+          <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
+          <label>What do you need? <textarea name="message" rows="4" required></textarea></label>
+          <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button class="button" type="submit">Send</button>
+          <p class="form-thanks" hidden>Thanks — we've got it and we'll be in touch.</p>
+          <p class="form-sorry" hidden>That didn't go through. Please try again.</p>
+          <script>
+            (function () {
+              var f = document.getElementById("form"), q = location.search;
+              if (/[?&]sent=0/.test(q) && location.hash === "#form") f.querySelector(".form-sorry").hidden = false;
+              else if (/[?&]sent=quote/.test(q)) f.querySelector(".form-thanks").hidden = false;
+            })();
+          </script>
+        </form>
       </div>
     </section>
 
@@ -100,8 +167,9 @@
 
   <footer class="site-footer">
     <!-- Keep this footer identical on every page. -->
-    <p class="copyright">&copy; 2026 Juniper Flats Pool &amp; Spa · a demo by <a href="https://patchlamp.com">Patchlamp</a></p>
+    <p class="copyright">&copy; 2026 Juniper Flats Pool &amp; Spa · a demo by <a href="https://patchlamp.com">Patchlamp</a> · <a href="/admin">Owner sign-in</a></p>
     <p class="patchlamp-badge"><a href="https://patchlamp.com/for/home-services?from=badge" rel="noopener">Patched by Patchlamp</a></p>
+    <script src="https://patchlamp.com/s/site-chat.js" data-site="demo-service" crossorigin="anonymous" defer></script>
     <script src="https://patchlamp.com/hit.js" data-site="demo-service" crossorigin="anonymous" defer></script>
   </footer>
 
