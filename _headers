@@ -23,7 +23,7 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
   Strict-Transport-Security: max-age=31536000
   Cross-Origin-Opener-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://patchlamp.com; connect-src 'self' https://patchlamp.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self'; form-action 'self' https://patchlamp.com; frame-ancestors 'self' https://patchlamp.com; base-uri 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://patchlamp.com https://static.cloudflareinsights.com; connect-src 'self' https://patchlamp.com https://cloudflareinsights.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self'; form-action 'self' https://patchlamp.com; frame-ancestors 'self' https://patchlamp.com; base-uri 'self'; object-src 'none'
 # end of the security headers
 /images/*
   ! Cache-Control
