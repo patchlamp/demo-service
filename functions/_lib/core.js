@@ -239,10 +239,12 @@ const STYLE = `
 `;
 
 // B178: _headers never reaches a Function's answer (Cloudflare Pages applies it to static files
-// only), so the owner's pages carry their own. No script runs on them; the style is the inline
+// only), so the owner's pages carry their own. No script of ours runs on them (Cloudflare's
+// analytics beacon, which the edge injects, is allowed by name); the style is the inline
 // STYLE above; nothing may frame them (x-frame-options DENY and frame-ancestors 'none').
 const ADMIN_SECURITY = {
-  "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; " +
+  "content-security-policy": "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; " +
+    "connect-src 'self' https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; " +
     "form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
   "x-content-type-options": "nosniff",
   "strict-transport-security": "max-age=31536000",
