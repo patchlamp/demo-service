@@ -11,4 +11,5 @@ import routes from "./routes.js";
 import estimates from "./estimates.js";
 import signatures from "./signatures.js";
 import ledger from "./ledger.js";
-export default { submissions, bookings, slots, customers, jobs, routes, estimates, signatures, ledger };
+import invoices from "./invoices.js";
+export default { submissions, bookings, slots, customers, jobs, routes, estimates, signatures, ledger, invoices };
