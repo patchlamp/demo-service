@@ -34,6 +34,11 @@
   --band-ink: #eef7fa;
   --band-dim: #a9c6d1;
   --band-accent: #8fdcf0;
+  /* the hero's own pair, as literals so a checker reads the pair the page shows: band-ink on the deep end */
+  --hero-ground: #062a3d;
+  --hero-ink: #eef7fa;
+  --hero-dim: #a9c6d1;
+  --hero-accent: #8fdcf0;
   --hero-scrim: #062a3d;
   --footer-bg: var(--band);
   --footer-ink: #c3d8e0;

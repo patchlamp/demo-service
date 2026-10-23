@@ -131,6 +131,7 @@ body {
   background: var(--bg); color: var(--ink);
   font-family: var(--font-text); font-size: var(--step-0); line-height: var(--text-leading);
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-kerning: normal;
+  font-synthesis: weight;   /* never a browser-slanted italic or scaled small caps: a look that wants one ships the face */
   overflow-x: clip;
 }
 img, svg, video { display: block; max-width: 100%; height: auto; }
@@ -150,11 +151,16 @@ a:hover { color: var(--link-hover); text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
 ::selection { background: var(--accent); color: var(--accent-ink); }
 
-/* Grounds that change the ink: everything inside reads these instead. */
+/* Grounds that change the ink: everything inside reads these instead, the surfaces (--bg, --bg-raised,
+   --bg-alt) as well as the text, so a form card, a tile or an input inside a band is a lifted tone of the
+   band with light text, never a light card with light text. */
 .band, .hero--full-dark {
   background-color: var(--band); background-image: var(--texture); color: var(--band-ink);
   --ink: var(--band-ink); --ink-dim: var(--band-dim); --accent-text: var(--band-accent);
   --link-hover: var(--band-ink); --focus: var(--band-accent);
+  --bg: color-mix(in srgb, var(--band-ink) 6%, var(--band));
+  --bg-alt: var(--bg);
+  --bg-raised: color-mix(in srgb, var(--band-ink) 11%, var(--band));
   --bg-line: color-mix(in srgb, var(--band-ink) 24%, transparent);
   --rule-strong: 1px solid color-mix(in srgb, var(--band-ink) 45%, transparent);
 }
@@ -162,11 +168,18 @@ a:hover { color: var(--link-hover); text-decoration-thickness: 2px; }
   background-color: var(--hero-ground); color: var(--hero-ink);
   --ink: var(--hero-ink); --ink-dim: var(--hero-dim); --accent-text: var(--hero-accent);
   --link-hover: var(--hero-ink); --focus: var(--hero-accent);
+  --bg: color-mix(in srgb, var(--hero-ink) 6%, var(--hero-ground));
+  --bg-alt: var(--bg);
+  --bg-raised: color-mix(in srgb, var(--hero-ink) 11%, var(--hero-ground));
+  --bg-line: color-mix(in srgb, var(--hero-ink) 24%, transparent);
 }
 .contact-card, .cta--band {
   background: var(--accent); color: var(--accent-ink);
   --ink: var(--accent-ink); --ink-dim: color-mix(in srgb, var(--accent-ink) 82%, var(--accent));
   --accent-text: var(--accent-ink); --link-hover: var(--accent-ink); --focus: var(--accent-ink);
+  --bg: color-mix(in srgb, var(--accent-ink) 8%, var(--accent));
+  --bg-alt: var(--bg);
+  --bg-raised: color-mix(in srgb, var(--accent-ink) 14%, var(--accent));
   --bg-line: color-mix(in srgb, var(--accent-ink) 30%, transparent);
 }
 
@@ -175,7 +188,7 @@ a:hover { color: var(--link-hover); text-decoration-thickness: 2px; }
   max-width: none; margin: 0; padding: 0.45rem var(--page-pad);
   background: var(--ink); color: var(--bg); font-size: var(--step--2); line-height: 1.45; text-align: center;
 }
-.demo-bar a { color: inherit; display: inline-block; padding-block: 0.15rem; }
+.demo-bar a { color: inherit; display: inline-block; padding-block: 0.3rem; }
 
 /* --- Header: the name, the sections, the one way to reach them ------------ */
 .site-header {
@@ -254,7 +267,7 @@ figure img { filter: var(--photo-filter); }
   font-size: var(--step-5); line-height: var(--display-leading); font-weight: var(--display-weight);
   max-width: 13ch; margin-bottom: var(--space);
 }
-.hero-heading em { color: var(--accent-text); }
+.hero-heading em { font-style: normal; color: var(--accent-text); }
 .hero-sub { font-size: var(--step-1); line-height: 1.45; max-width: 30em; color: var(--ink-dim); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--space-2); }
 .hero-actions:empty { display: none; }
@@ -295,11 +308,21 @@ figure img { filter: var(--photo-filter); }
 .hero--full-dark { display: grid; min-height: 30rem; }
 @media (min-width: 48em) { .hero--full-dark { min-height: min(92svh, 56rem); } }
 .hero--full-dark > .hero-media, .hero--full-dark > .hero-copy { grid-area: 1 / 1; }
+/* The scrim is what makes words over any photo readable: behind the heading it is at least about 70% of the
+   band colour, which keeps white text above 4.5:1 even over white sky (the design gate samples it). On a phone
+   the words fill the hero, so the scrim is one deep wash; wider, it darkens the left and the bottom. */
 .hero--full-dark .hero-media::after {
   content: ""; position: absolute; inset: 0;
-  background:
-    linear-gradient(180deg, transparent 22%, color-mix(in srgb, var(--hero-scrim) 58%, transparent) 58%, color-mix(in srgb, var(--hero-scrim) 94%, transparent) 100%),
-    linear-gradient(90deg, color-mix(in srgb, var(--hero-scrim) 60%, transparent), transparent 66%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--hero-scrim) 48%, transparent) 0%,
+    color-mix(in srgb, var(--hero-scrim) 76%, transparent) 24%, color-mix(in srgb, var(--hero-scrim) 82%, transparent) 55%,
+    color-mix(in srgb, var(--hero-scrim) 95%, transparent) 100%);
+}
+@media (min-width: 48em) {
+  .hero--full-dark .hero-media::after {
+    background:
+      linear-gradient(180deg, transparent 12%, color-mix(in srgb, var(--hero-scrim) 45%, transparent) 45%, color-mix(in srgb, var(--hero-scrim) 94%, transparent) 100%),
+      linear-gradient(90deg, color-mix(in srgb, var(--hero-scrim) 82%, transparent), color-mix(in srgb, var(--hero-scrim) 62%, transparent) 42%, transparent 74%);
+  }
 }
 .hero--full-dark .hero-copy {
   align-self: end; width: 100%; max-width: calc(var(--content) + 2 * var(--page-pad)); margin-inline: auto;
@@ -494,14 +517,10 @@ figure img { filter: var(--photo-filter); }
   background: var(--bg); border: 1px solid var(--bg-line); border-radius: var(--radius);
 }
 .site-form textarea { resize: vertical; }
-.site-form :is(input, textarea, select):focus-visible { outline-offset: 0; border-color: var(--accent); }
-.site-form .btn, .site-form .button { justify-self: start; }
-/* The honeypot: its inline style puts it 9999px to the left, which shows as page
-   overflow; this keeps it in the form, one pixel, clipped. Bots still see it. */
-.site-form input[name="website"] {
-  position: absolute !important; left: 0 !important; width: 1px !important; min-height: 0 !important; height: 1px;
-  padding: 0 !important; border: 0 !important; clip-path: inset(50%); overflow: hidden;
+.site-form input:not([type=radio]):not([type=checkbox]):focus-visible, .site-form :is(textarea, select):focus-visible {
+  outline-offset: 0; border-color: var(--accent);
 }
+.site-form .btn, .site-form .button { justify-self: start; }
 .form-off-note {
   padding: 0.75rem 1rem; border: 1px dashed var(--ink-dim); border-radius: var(--radius);
   background: var(--bg); font-size: var(--step--1); font-weight: 600;
@@ -531,9 +550,11 @@ figure img { filter: var(--photo-filter); }
   padding: 0.8rem 0.85rem; font-size: var(--step-0); font-weight: 400;
   background: var(--bg); border: 2px solid var(--bg-line); border-radius: var(--radius);
 }
-/* the radio is clipped to a pixel, not hidden: it stays in the form and the accessibility tree,
-   and the tile shows its checked and focus states */
-.slot-tile input { position: absolute; top: 50%; left: 50%; width: 1px; height: 1px; margin: 0; clip-path: inset(50%); }
+/* the radio is the whole tile: unpainted (no box, no border, never opacity 0), it is the tap target and stays
+   in the form and the accessibility tree; the tile shows its checked and focus states */
+.slot-tile input { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; margin: 0;
+  -webkit-appearance: none; appearance: none; background: transparent; border: 0; border-radius: inherit; cursor: pointer; }
+.slot-tile input:focus-visible { outline: none; }
 .slot-day { font-size: var(--step--1); font-weight: 600; color: var(--ink-dim); }
 .slot-time { font: var(--heading-weight) var(--step-1)/1.15 var(--font-display); letter-spacing: -0.01em; text-transform: var(--display-case); white-space: nowrap; }
 .slot-note { font-size: var(--step--2); font-weight: 600; color: var(--accent-text); }
@@ -551,7 +572,7 @@ figure img { filter: var(--photo-filter); }
   font-size: var(--step-0); font-weight: 400;
   background: var(--bg-raised); border: 1px solid var(--bg-line); border-radius: var(--radius);
 }
-.booking-day .booking-slot input { width: 1.25rem; height: 1.25rem; accent-color: var(--accent); }
+.booking-day .booking-slot input { width: 1.5rem; height: 1.5rem; margin: 0; accent-color: var(--accent); }   /* 24px: a thumb's minimum */
 .booking-day .booking-slot:has(input:checked) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--bg-raised)); }
 /* booking--full: every time by day in columns, the fields beside them */
 .booking--full [data-slots] { grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr)); gap: var(--space) var(--space-2); }

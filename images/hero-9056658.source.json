@@ -1,0 +1,49 @@
+{
+  "id": "pexels:9056658",
+  "src": "images/hero-9056658-1600.jpg",
+  "alt": "A serene outdoor pool with a wooden deck and hammock surrounded by lush greenery on a sunny day.",
+  "w": 1600,
+  "h": 900,
+  "class": "stock",
+  "source": "https://www.pexels.com/photo/a-swimming-pool-on-a-grassy-field-9056658/",
+  "licence": "Pexels",
+  "label": "Stock photo",
+  "slot": "hero",
+  "photographer": "Matheus Bertelli",
+  "photographer_url": "https://www.pexels.com/@bertellifotografia",
+  "query": "backyard pool mountains",
+  "variants": [
+    {
+      "src": "images/hero-9056658-800.avif",
+      "w": 800,
+      "type": "image/avif"
+    },
+    {
+      "src": "images/hero-9056658-800.webp",
+      "w": 800,
+      "type": "image/webp"
+    },
+    {
+      "src": "images/hero-9056658-800.jpg",
+      "w": 800,
+      "type": "image/jpeg"
+    },
+    {
+      "src": "images/hero-9056658-1600.avif",
+      "w": 1600,
+      "type": "image/avif"
+    },
+    {
+      "src": "images/hero-9056658-1600.webp",
+      "w": 1600,
+      "type": "image/webp"
+    },
+    {
+      "src": "images/hero-9056658-1600.jpg",
+      "w": 1600,
+      "type": "image/jpeg"
+    }
+  ],
+  "treatment": "cool",
+  "ratio": "16:9"
+}

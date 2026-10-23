@@ -18,10 +18,106 @@
  },
  "design": {
   "look": "clear-water",
-  "variants": {
-   "hero": "typographic"
-  },
-  "images": []
+  "images": [
+   {
+    "id": "pexels:9056658",
+    "src": "images/hero-9056658-1600.jpg",
+    "alt": "A serene outdoor pool with a wooden deck and hammock surrounded by lush greenery on a sunny day.",
+    "w": 1600,
+    "h": 900,
+    "class": "stock",
+    "source": "https://www.pexels.com/photo/a-swimming-pool-on-a-grassy-field-9056658/",
+    "licence": "Pexels",
+    "label": "Stock photo",
+    "variants": [
+     {
+      "src": "images/hero-9056658-800.avif",
+      "w": 800,
+      "type": "image/avif"
+     },
+     {
+      "src": "images/hero-9056658-800.webp",
+      "w": 800,
+      "type": "image/webp"
+     },
+     {
+      "src": "images/hero-9056658-800.jpg",
+      "w": 800,
+      "type": "image/jpeg"
+     },
+     {
+      "src": "images/hero-9056658-1600.avif",
+      "w": 1600,
+      "type": "image/avif"
+     },
+     {
+      "src": "images/hero-9056658-1600.webp",
+      "w": 1600,
+      "type": "image/webp"
+     },
+     {
+      "src": "images/hero-9056658-1600.jpg",
+      "w": 1600,
+      "type": "image/jpeg"
+     }
+    ],
+    "treatment": "cool",
+    "ratio": "16:9",
+    "slot": "hero",
+    "photographer": "Matheus Bertelli",
+    "photographer_url": "https://www.pexels.com/@bertellifotografia",
+    "query": "backyard pool mountains"
+   },
+   {
+    "id": "pexels:25524565",
+    "src": "images/card-25524565-1600.jpg",
+    "alt": "Stylish straw hat and lemons by a clear blue pool, embodying summer relaxation.",
+    "w": 1600,
+    "h": 1066,
+    "class": "stock",
+    "source": "https://www.pexels.com/photo/items-by-a-swimming-pool-25524565/",
+    "licence": "Pexels",
+    "label": "Stock photo",
+    "variants": [
+     {
+      "src": "images/card-25524565-800.avif",
+      "w": 800,
+      "type": "image/avif"
+     },
+     {
+      "src": "images/card-25524565-800.webp",
+      "w": 800,
+      "type": "image/webp"
+     },
+     {
+      "src": "images/card-25524565-800.jpg",
+      "w": 800,
+      "type": "image/jpeg"
+     },
+     {
+      "src": "images/card-25524565-1600.avif",
+      "w": 1600,
+      "type": "image/avif"
+     },
+     {
+      "src": "images/card-25524565-1600.webp",
+      "w": 1600,
+      "type": "image/webp"
+     },
+     {
+      "src": "images/card-25524565-1600.jpg",
+      "w": 1600,
+      "type": "image/jpeg"
+     }
+    ],
+    "treatment": "cool",
+    "ratio": "3:2",
+    "slot": "card",
+    "photographer": "hello aesthe",
+    "photographer_url": "https://www.pexels.com/@helloaesthe",
+    "query": "pool cleaning net"
+   }
+  ]
  },
  "sections": [
   {
@@ -29,7 +125,8 @@
    "kicker": "Pool & spa care, booked online",
    "heading": "Clear water. Working equipment.",
    "sub": "Weekly pool care, seasonal openings and closings, repairs and spa service. Book a visit online.",
-   "secondary": "Ask for a quote"
+   "secondary": "Ask for a quote",
+   "image": "pexels:9056658"
   },
   {
    "type": "proof",
@@ -70,7 +167,8 @@
    "paragraphs": [
     "Weekly service means the same day each week: we skim, brush and vacuum, test and balance the water, and empty the baskets. We also handle spring openings, fall closings and spa care.",
     "For repairs, we work on pumps, heaters, filters and automation. You get the price before work starts. Have a question? Dana answers, with a reply within one business day."
-   ]
+   ],
+   "image": "pexels:25524565"
   },
   {
    "type": "booking",
