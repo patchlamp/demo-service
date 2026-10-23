@@ -70,7 +70,7 @@ how to change it, and how to check a change is live.
 ```
 
 - The sections are `hero` (one, first), `proof` (a short strip of facts), `services`, `area`, `about`,
-  `gallery`, `booking`, `quote`, `contact`, `details`, `cta` (a band with one line and the call to
+  `gallery`, `booking`, `quote`, `contact`, `details`, `cta` (a band with a `heading`, an optional `intro` and the call to
   action), and `custom` (below). The order in the list is the order on the page. `booking` and `quote`
   are the calendar and the quote form: keep both, because the owner's `/admin` lists what they take in.
 - A text is a plain string, or `{"text": …, "facts": [...]}` as the preview this site may have started

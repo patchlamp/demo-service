@@ -7,6 +7,7 @@
  "title": "Juniper Flats Pool & Spa — Patchlamp's service demo",
  "description": "Juniper Flats Pool & Spa is Patchlamp's demo service business: book a time, ask for a quote, and change the site by text. Not a real company.",
  "noindex": true,
+ "demo": true,
  "bar": {
   "file": "custom/demo-bar.html"
  },
