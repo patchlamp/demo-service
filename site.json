@@ -1,0 +1,102 @@
+{
+ "schema": 2,
+ "slug": "demo-service",
+ "template": "service",
+ "name": "Juniper Flats Pool & Spa",
+ "lang": "en",
+ "title": "Juniper Flats Pool & Spa — Patchlamp's service demo",
+ "description": "Juniper Flats Pool & Spa is Patchlamp's demo service business: book a time, ask for a quote, and change the site by text. Not a real company.",
+ "noindex": true,
+ "bar": {
+  "file": "custom/demo-bar.html"
+ },
+ "cta": {
+  "text": "Book a visit",
+  "short": "Book",
+  "href": "#booking"
+ },
+ "design": {
+  "look": "clear-water",
+  "variants": {
+   "hero": "typographic"
+  },
+  "images": []
+ },
+ "sections": [
+  {
+   "type": "hero",
+   "kicker": "Pool & spa care, booked online",
+   "heading": "Clear water. Working equipment.",
+   "sub": "Weekly pool care, seasonal openings and closings, repairs and spa service. Book a visit online.",
+   "secondary": "Ask for a quote"
+  },
+  {
+   "type": "proof",
+   "items": [
+    "Same day each week",
+    "Repairs priced before work starts",
+    "Book visits online"
+   ]
+  },
+  {
+   "type": "services",
+   "kicker": "Pool & spa service",
+   "heading": "The weekly care. The seasonal work.",
+   "intro": "Keep up with the water, get ready for the season or get equipment repaired.",
+   "items": [
+    {
+     "title": "Weekly service",
+     "text": "Skim, brush, vacuum, test and balance the water, empty the baskets. Same day each week."
+    },
+    {
+     "title": "Openings & closings",
+     "text": "Spring start-up and fall winterizing. Covers, lines, equipment and the first water balance."
+    },
+    {
+     "title": "Repairs",
+     "text": "Pumps, heaters, filters and automation. You get the price before the work starts."
+    },
+    {
+     "title": "Spa care",
+     "text": "Drain and refill, filter cleaning and a water check for your hot tub."
+    }
+   ]
+  },
+  {
+   "type": "about",
+   "kicker": "Juniper Flats",
+   "heading": "Pool care on a regular day.",
+   "paragraphs": [
+    "Weekly service means the same day each week: we skim, brush and vacuum, test and balance the water, and empty the baskets. We also handle spring openings, fall closings and spa care.",
+    "For repairs, we work on pumps, heaters, filters and automation. You get the price before work starts. Have a question? Dana answers, with a reply within one business day."
+   ]
+  },
+  {
+   "type": "booking",
+   "kicker": "Book a visit",
+   "heading": "Pick an open time.",
+   "intro": "Book online. We'll confirm your visit by email or phone the same day."
+  },
+  {
+   "type": "quote",
+   "kicker": "Ask for a quote",
+   "heading": "What needs taking care of?",
+   "intro": "Tell us what your pool or spa needs. We'll get in touch within one business day."
+  },
+  {
+   "type": "cta",
+   "heading": "Pool or spa due for a visit? Pick an open time online."
+  },
+  {
+   "type": "details",
+   "kicker": "Hours & location",
+   "heading": "When and where to find us",
+   "hours": [
+    "Mon–Fri: 8am–5pm",
+    "Sat: 9am–1pm",
+    "Sun: closed"
+   ],
+   "where": "A made-up company, so no address. The real version of this box says where they work."
+  }
+ ]
+}

@@ -3,29 +3,46 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page not found — Juniper Flats Pool & Spa</title>
+  <title>Page not found — Juniper Flats Pool &amp; Spa</title>
+  <meta name="description" content="Juniper Flats Pool &amp; Spa is Patchlamp's demo service business: book a time, ask for a quote, and change the site by text. Not a real company.">
+  <meta name="robots" content="noindex">
+  <!-- The pages are rendered from site.json by `site render` (lib/sitegen.py): change site.json, never this file. -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/look.css">
+  <script src="js/motion.js" defer></script>
 </head>
-<body>
-
+<body class="page-404">
   <p class="demo-bar">
     <strong>This is a demo.</strong> Juniper Flats Pool &amp; Spa is not a real company — it is
-    <a href="https://patchlamp.com/">Patchlamp's</a> service-business demo. It resets every night.
+    <a href="https://patchlamp.com/">Patchlamp's</a> service-business demo. Text the demo number and
+    whatever you ask for changes this site, usually in under a minute. It resets every night.
   </p>
+
   <header class="site-header">
-    <a class="wordmark" href="index.html">Juniper Flats Pool & Spa</a>
+    <a class="wordmark" href="index.html">Juniper Flats Pool &amp; Spa</a>
     <nav class="site-nav" aria-label="Site">
-      <a href="index.html">Home</a>
-      <a href="photos.html">Photos</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#quote">Get a quote</a>
     </nav>
+    <a class="header-cta" href="#booking"><span class="cta-full">Book a visit</span><span class="cta-short">Book</span></a>
   </header>
-  <main>
-    <section class="hero page-hero">
-      <h1 class="hero-title">Page not found</h1>
-      <p class="hero-tagline">That page doesn't exist. <a href="index.html">Back to the home page.</a></p>
+
+  <main id="top">
+    <section class="page-head" id="not-found">
+      <div class="section-inner">
+        <h1>Page not found</h1>
+        <p>That page doesn't exist. <a href="index.html">Back to the home page.</a></p>
+      </div>
     </section>
+
   </main>
-  <script src="https://patchlamp.com/s/site-chat.js" data-site="demo-service" crossorigin="anonymous" defer></script>
-  <script src="https://patchlamp.com/hit.js" data-site="demo-service" crossorigin="anonymous" defer></script>
+
+  <footer class="site-footer">
+    <p class="copyright">&copy; 2026 Juniper Flats Pool &amp; Spa · <a href="/admin">Owner sign-in</a></p>
+    <p class="patchlamp-badge"><a href="https://patchlamp.com/for/home-services?from=badge" rel="noopener">Patched by Patchlamp</a></p>
+    <script src="https://patchlamp.com/s/site-chat.js" data-site="demo-service" crossorigin="anonymous" defer></script>
+    <script src="https://patchlamp.com/hit.js" data-site="demo-service" crossorigin="anonymous" defer></script>
+  </footer>
 </body>
 </html>

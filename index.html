@@ -6,10 +6,12 @@
   <title>Juniper Flats Pool &amp; Spa — Patchlamp's service demo</title>
   <meta name="description" content="Juniper Flats Pool &amp; Spa is Patchlamp's demo service business: book a time, ask for a quote, and change the site by text. Not a real company.">
   <meta name="robots" content="noindex">
+  <!-- The pages are rendered from site.json by `site render` (lib/sitegen.py): change site.json, never this file. -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/look.css">
+  <script src="js/motion.js" defer></script>
 </head>
-<body>
-
+<body class="page-home">
   <p class="demo-bar">
     <strong>This is a demo.</strong> Juniper Flats Pool &amp; Spa is not a real company — it is
     <a href="https://patchlamp.com/">Patchlamp's</a> service-business demo. Text the demo number and
@@ -19,134 +21,177 @@
   <header class="site-header">
     <a class="wordmark" href="index.html">Juniper Flats Pool &amp; Spa</a>
     <nav class="site-nav" aria-label="Site">
-      <a href="index.html" aria-current="page">Home</a>
       <a href="index.html#services">Services</a>
-      <a href="index.html#booking">Book</a>
-      <a href="index.html#quote">Quote</a>
-      <a href="photos.html">Photos</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#quote">Get a quote</a>
     </nav>
+    <a class="header-cta" href="#booking"><span class="cta-full">Book a visit</span><span class="cta-short">Book</span></a>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1 class="hero-title">Juniper Flats Pool &amp; Spa</h1>
-      <p class="hero-tagline">Weekly pool care, spa service and repairs, booked online.</p>
-      <div class="button-row">
-        <a class="button" href="#booking">Book a visit</a>
-        <a class="button" href="#quote">Ask for a quote</a>
+  <main id="top">
+    <section class="hero-block hero--typographic" id="hero">
+      <div class="hero-copy">
+        <p class="hero-kicker">Pool &amp; spa care, booked online</p>
+        <h1 class="hero-heading">Clear water. Working equipment.</h1>
+        <div class="hero-aside">
+          <p class="hero-sub">Weekly pool care, seasonal openings and closings, repairs and spa service. Book a visit online.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#booking">Book a visit</a>
+            <a class="btn btn-secondary" href="#quote">Ask for a quote</a>
+          </div>
+        </div>
       </div>
     </section>
-
-    <section class="section" id="services">
-      <div class="section-inner reveal">
-        <p class="kicker">What we do</p>
-        <h2>Clear water, working equipment</h2>
-        <ul class="card-list">
-          <li><h3>Weekly service</h3><p>Skim, brush, vacuum, test and balance the water, empty the baskets. Same day each week.</p></li>
-          <li><h3>Openings &amp; closings</h3><p>Spring start-up and fall winterizing: covers, lines, equipment and the first balance.</p></li>
-          <li><h3>Repairs</h3><p>Pumps, heaters, filters and automation. We tell you the price before we start.</p></li>
-          <li><h3>Spa care</h3><p>Drain and refill, filter cleaning and a water check for hot tubs.</p></li>
-        </ul>
+    <section class="proof proof--strip" aria-label="At a glance">
+      <ul class="proof-list">
+        <li>Same day each week</li>
+        <li>Repairs priced before work starts</li>
+        <li>Book visits online</li>
+      </ul>
+    </section>
+    <section class="section services services--numerals" id="services">
+      <div class="section-inner">
+        <div class="section-head">
+          <p class="kicker">Pool &amp; spa service</p>
+          <h2>The weekly care. The seasonal work.</h2>
+          <p class="lede">Keep up with the water, get ready for the season or get equipment repaired.</p>
+        </div>
+        <ol class="service-list">
+          <li data-reveal><span class="service-n" aria-hidden="true">01</span><h3>Weekly service</h3><p>Skim, brush, vacuum, test and balance the water, empty the baskets. Same day each week.</p></li>
+          <li data-reveal><span class="service-n" aria-hidden="true">02</span><h3>Openings &amp; closings</h3><p>Spring start-up and fall winterizing. Covers, lines, equipment and the first water balance.</p></li>
+          <li data-reveal><span class="service-n" aria-hidden="true">03</span><h3>Repairs</h3><p>Pumps, heaters, filters and automation. You get the price before the work starts.</p></li>
+          <li data-reveal><span class="service-n" aria-hidden="true">04</span><h3>Spa care</h3><p>Drain and refill, filter cleaning and a water check for your hot tub.</p></li>
+        </ol>
       </div>
     </section>
-
-    <section class="section" id="booking">
-      <div class="section-inner reveal">
-        <p class="kicker">Book</p>
-        <h2>Book a visit</h2>
-        <!-- The times come from the database (booking_slots): open them on /admin/slots, or by text.
-             The calendar block is templates/collections/bookings/booking.html. -->
-        <p class="muted">Pick an open time. We'll confirm by email or phone the same day.</p>
-        <form class="site-form booking-form" id="book" action="/api/bookings" method="post">
-          <fieldset class="booking-slots">
-            <legend>Pick a time</legend>
-            <div data-slots><p class="muted">Loading the open times…</p></div>
-          </fieldset>
-          <label>Name <input name="name" required autocomplete="name"></label>
-          <label>Email <input name="email" type="email" autocomplete="email"></label>
-          <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
-          <label>Anything we should know? <textarea name="notes" rows="3"></textarea></label>
-          <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
-          <button class="button" type="submit">Book it</button>
-          <p class="form-thanks" data-sent="booking" hidden>Got it, your request is in. We'll confirm by email or phone, and if you left an email, a copy with a link to move or cancel it is on its way.</p>
-          <p class="form-sorry" data-sent="full" hidden>That time was just taken or closed. Please pick another.</p>
-          <p class="form-sorry" data-sent="0" hidden>That didn't go through: pick a time, and leave a name and an email or phone.</p>
-          <script>
-            (function () {
-              var form = document.getElementById("book");
-              var box = form.querySelector("[data-slots]");
-              var sent = (location.search.match(/[?&]sent=([a-z0-9-]+)/) || [])[1];
-              if (sent && location.hash === "#book") form.querySelectorAll("[data-sent]").forEach(function (p) { p.hidden = p.getAttribute("data-sent") !== sent; });
-              function at(s) { var p = s.split(/[-T:]/); return new Date(Date.UTC(+p[0], p[1] - 1, +p[2], +p[3], +p[4])); }
-              var day = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", weekday: "long", month: "long", day: "numeric" });
-              var time = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", hour: "numeric", minute: "2-digit" });
-              function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
-              fetch("/api/bookings", { headers: { accept: "application/json" } })
-                .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-                .then(function (data) {
-                  box.textContent = "";
-                  if (!data.slots.length) { box.appendChild(el("p", "muted", "No open times right now. Ask for a quote instead and we'll find one.")); return; }
-                  var group = null, last = "";
-                  data.slots.forEach(function (s) {
-                    var d = day.format(at(s.starts_at));
-                    if (d !== last) { group = el("div", "booking-day"); group.appendChild(el("p", "booking-date", d)); box.appendChild(group); last = d; }
-                    var label = el("label", "booking-slot");
-                    var input = el("input"); input.type = "radio"; input.name = "slot"; input.value = s.id; input.required = true;
-                    label.appendChild(input);
-                    label.appendChild(document.createTextNode(" " + time.format(at(s.starts_at)) + (s.label ? " · " + s.label : "") + (s.places > 1 ? " (" + s.places + " places)" : "")));
-                    group.appendChild(label);
-                  });
-                })
-                .catch(function () { box.textContent = ""; box.appendChild(el("p", "muted", "The calendar didn't load. Please try again in a minute.")); });
-            })();
-          </script>
-          <style>
-            .booking-slots { border: 0; padding: 0; margin: 0; display: grid; gap: .75rem; }
-            .booking-slots legend { font-weight: 600; margin-bottom: .5rem; }
-            .booking-day { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
-            .booking-date { flex-basis: 100%; margin: 0; color: var(--ink-dim); }
-            .booking-slot { display: inline-flex !important; align-items: center; gap: .4rem; padding: .45rem .8rem; min-height: 44px;
-              border: 1px solid var(--bg-line); border-radius: 3px; background: var(--bg-raised); cursor: pointer; }
-            .booking-slot input { width: 1.5rem; height: 1.5rem; margin: 0; padding: 0; }
-          </style>
-        </form>
+    <section class="section about about--band band" id="about">
+      <div class="section-inner">
+        <div class="about-grid">
+          <div class="about-copy">
+            <p class="kicker">Juniper Flats</p>
+            <h2>Pool care on a regular day.</h2>
+            <p class="lede">Weekly service means the same day each week: we skim, brush and vacuum, test and balance the water, and empty the baskets. We also handle spring openings, fall closings and spa care.</p>
+            <p class="">For repairs, we work on pumps, heaters, filters and automation. You get the price before work starts. Have a question? Dana answers, with a reply within one business day.</p>
+          </div>
+        </div>
       </div>
     </section>
-
-    <section class="section" id="quote">
-      <div class="section-inner reveal">
-        <p class="kicker">Quotes</p>
-        <h2>Ask for a quote</h2>
-        <p class="muted">A repair, a new heater, a season of weekly service — tell us what you need.</p>
-        <form class="site-form" id="form" action="/api/submissions" method="post">
-          <input type="hidden" name="_form" value="quote">
-          <label>Name <input name="name" required autocomplete="name"></label>
-          <label>Email <input name="email" type="email" required autocomplete="email"></label>
-          <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
-          <label>What do you need? <textarea name="message" rows="4" required></textarea></label>
-          <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
-          <button class="button" type="submit">Send</button>
-          <p class="form-thanks" hidden>Thanks — we've got it and we'll be in touch.</p>
-          <p class="form-sorry" hidden>That didn't go through. Please try again.</p>
-          <script>
-            (function () {
-              var f = document.getElementById("form"), q = location.search;
-              if (/[?&]sent=0/.test(q) && location.hash === "#form") f.querySelector(".form-sorry").hidden = false;
-              else if (/[?&]sent=quote/.test(q)) f.querySelector(".form-thanks").hidden = false;
-            })();
-          </script>
-        </form>
+    <section class="section booking booking--next-available" id="booking">
+      <div class="section-inner">
+        <div class="form-grid">
+          <div class="section-head">
+            <p class="kicker">Book a visit</p>
+            <h2>Pick an open time.</h2>
+            <p class="lede">Book online. We'll confirm your visit by email or phone the same day.</p>
+          </div>
+          <div class="form-card" data-reveal>
+            <!-- The times come from the database (booking_slots): open them on /admin/slots, or by text. The script
+                 lists them from /api/bookings: data-next="N" puts the first N in a "next available" strip and the
+                 rest by day behind "More times"; data-next="0" lists them all by day. One radio group named slot. -->
+            <form class="site-form booking-form" id="book" action="/api/bookings" method="post">
+              <fieldset class="form-fields">
+                <fieldset class="booking-slots">
+                  <legend>Pick a time</legend>
+                  <div data-slots data-next="4">
+                    <div class="slots-next slots-waiting" aria-hidden="true"><span class="slot-tile"></span><span class="slot-tile"></span><span class="slot-tile"></span><span class="slot-tile"></span></div>
+                    <p class="muted">Loading the open times…</p>
+                  </div>
+                </fieldset>
+                <div class="field-row">
+                  <label>Name <input name="name" required autocomplete="name"></label>
+                  <label>Email <input name="email" type="email" autocomplete="email"></label>
+                  <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
+                </div>
+                <label>Anything we should know? <textarea name="notes" rows="3"></textarea></label>
+                <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+                <button class="btn btn-primary" type="submit">Book it</button>
+              </fieldset>
+              <p class="form-thanks" data-sent="booking" hidden>Got it, your request is in. We'll confirm by email or phone, and if you left an email, a copy with a link to move or cancel it is on its way.</p>
+              <p class="form-sorry" data-sent="full" hidden>That time was just taken or closed. Please pick another.</p>
+              <p class="form-sorry" data-sent="0" hidden>That didn't go through: pick a time, and leave a name and an email or phone.</p>
+              <script>
+(function(){
+var f=document.getElementById("book"),b=f.querySelector("[data-slots]"),n=+b.getAttribute("data-next")||0,q=(location.search.match(/[?&]sent=([a-z0-9-]+)/)||[])[1];
+if(q&&location.hash=="#book")f.querySelectorAll("[data-sent]").forEach(function(p){p.hidden=p.getAttribute("data-sent")!=q});
+function F(o){o.timeZone="UTC";return new Intl.DateTimeFormat("en-US",o).format}
+var D=F({weekday:"long",month:"long",day:"numeric"}),S=F({weekday:"short",month:"short",day:"numeric"}),T=F({hour:"numeric",minute:"2-digit"});
+function at(s){return new Date(s.starts_at.slice(0,16)+"Z")}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e}
+function put(p,c){p.appendChild(c);return c}
+function say(x){b.textContent="";put(b,el("p","muted",x))}
+function slot(c,s){var l=el("label",c),i=put(l,el("input"));i.type="radio";i.name="slot";i.value=s.id;i.required=true;return l}
+function ex(s){return[s.label,s.places>1?s.places+" places":""].filter(Boolean).join(" · ")}
+fetch("/api/bookings").then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(d){
+var a=d.slots,o=b,g,z="";
+if(!a.length)return say("No open times right now. Ask for a quote instead and we'll find one.");
+b.textContent="";
+if(n){g=put(b,el("div","slots-next"));put(g,el("p","slots-next-label","Next available"));
+a.slice(0,n).forEach(function(s){var l=put(g,slot("booking-slot slot-tile",s)),t=at(s);put(l,el("span","slot-day",S(t)));put(l,el("span","slot-time",T(t)));if(ex(s))put(l,el("span","slot-note",ex(s)))});
+a=a.slice(n);if(!a.length)return;
+o=put(b,el("details","slots-more"));put(put(o,el("summary",null,"More times ")),el("span","slots-count","("+a.length+" more)"))}
+a.forEach(function(s){var t=at(s),w=D(t);if(w!=z){g=put(o,el("div","booking-day"));put(g,el("p","booking-date",w));z=w}
+put(put(g,slot("booking-slot",s)),el("span",0," "+T(t)+(ex(s)?" · "+ex(s):"")))})
+}).catch(function(){say("The calendar didn't load. Please try again in a minute.")})
+})();
+              </script>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
-
-    <section class="section" id="details">
-      <div class="section-inner reveal">
-        <p class="kicker">Details</p>
-        <h2>Hours</h2>
+    <section class="section quote quote--card alt" id="quote">
+      <div class="section-inner">
+        <div class="form-grid">
+          <div class="section-head">
+            <p class="kicker">Ask for a quote</p>
+            <h2>What needs taking care of?</h2>
+            <p class="lede">Tell us what your pool or spa needs. We'll get in touch within one business day.</p>
+          </div>
+          <div class="form-card" data-reveal>
+            <form class="site-form" id="form" action="/api/submissions" method="post">
+              <input type="hidden" name="_form" value="quote">
+              <fieldset class="form-fields">
+                <div class="field-row">
+                  <label>Name <input name="name" required autocomplete="name"></label>
+                  <label>Email <input name="email" type="email" required autocomplete="email"></label>
+                  <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
+                </div>
+                <label>What do you need? <textarea name="message" rows="4" required></textarea></label>
+                <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+                <button class="btn btn-primary" type="submit">Send</button>
+              </fieldset>
+              <p class="form-thanks" hidden>Thanks — we've got it and we'll be in touch.</p>
+              <p class="form-sorry" hidden>That didn't go through. Please try again.</p>
+              <script>
+                (function () {
+                  var f = document.getElementById("form"), q = location.search;
+                  if (/[?&]sent=0/.test(q) && location.hash === "#form") f.querySelector(".form-sorry").hidden = false;
+                  else if (/[?&]sent=quote/.test(q)) f.querySelector(".form-thanks").hidden = false;
+                })();
+              </script>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="cta cta--band" id="cta">
+      <div class="section-inner" data-reveal>
+        <h2>Pool or spa due for a visit? Pick an open time online.</h2>
+        <div class="action-row">
+          <a class="btn btn-primary" href="#booking">Book a visit</a>
+        </div>
+      </div>
+    </section>
+    <section class="section details details--columns" id="details">
+      <div class="section-inner">
+        <div class="section-head">
+          <p class="kicker">Hours &amp; location</p>
+          <h2>When and where to find us</h2>
+        </div>
         <div class="details-grid">
           <div>
-            <h3>Service days</h3>
-            <ul>
+            <h3>Hours</h3>
+            <ul class="hours">
               <li>Mon–Fri: 8am–5pm</li>
               <li>Sat: 9am–1pm</li>
               <li>Sun: closed</li>
@@ -158,21 +203,20 @@
           </div>
           <div>
             <h3>Contact</h3>
-            <p>Book a time or ask for a quote above.</p>
+            <ul class="contact-lines">
+            </ul>
           </div>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer">
-    <!-- Keep this footer identical on every page. -->
-    <p class="copyright">&copy; 2026 Juniper Flats Pool &amp; Spa · a demo by <a href="https://patchlamp.com">Patchlamp</a> · <a href="/admin">Owner sign-in</a></p>
+    <p class="copyright">&copy; 2026 Juniper Flats Pool &amp; Spa · <a href="/admin">Owner sign-in</a></p>
     <p class="patchlamp-badge"><a href="https://patchlamp.com/for/home-services?from=badge" rel="noopener">Patched by Patchlamp</a></p>
     <script src="https://patchlamp.com/s/site-chat.js" data-site="demo-service" crossorigin="anonymous" defer></script>
     <script src="https://patchlamp.com/hit.js" data-site="demo-service" crossorigin="anonymous" defer></script>
   </footer>
-
-  <script src="js/main.js"></script>
 </body>
 </html>
