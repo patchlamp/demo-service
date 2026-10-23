@@ -1,201 +1,203 @@
 {
- "schema": 2,
- "slug": "demo-service",
- "template": "service",
- "name": "Juniper Flats Pool & Spa",
- "lang": "en",
- "title": "Juniper Flats Pool & Spa — Patchlamp's service demo",
- "description": "Juniper Flats Pool & Spa is Patchlamp's demo service business: book a time, ask for a quote, and change the site by text. Not a real company.",
- "noindex": true,
- "demo": true,
- "bar": {
-  "file": "custom/demo-bar.html"
- },
- "cta": {
-  "text": "Book a visit",
-  "short": "Book",
-  "href": "#booking"
- },
- "design": {
-  "look": "clear-water",
-  "images": [
-   {
-    "id": "pexels:9056658",
-    "src": "images/hero-9056658-1600.jpg",
-    "alt": "A serene outdoor pool with a wooden deck and hammock surrounded by lush greenery on a sunny day.",
-    "w": 1600,
-    "h": 900,
-    "class": "stock",
-    "source": "https://www.pexels.com/photo/a-swimming-pool-on-a-grassy-field-9056658/",
-    "licence": "Pexels",
-    "label": "Stock photo",
-    "variants": [
-     {
-      "src": "images/hero-9056658-800.avif",
-      "w": 800,
-      "type": "image/avif"
-     },
-     {
-      "src": "images/hero-9056658-800.webp",
-      "w": 800,
-      "type": "image/webp"
-     },
-     {
-      "src": "images/hero-9056658-800.jpg",
-      "w": 800,
-      "type": "image/jpeg"
-     },
-     {
-      "src": "images/hero-9056658-1600.avif",
-      "w": 1600,
-      "type": "image/avif"
-     },
-     {
-      "src": "images/hero-9056658-1600.webp",
-      "w": 1600,
-      "type": "image/webp"
-     },
-     {
-      "src": "images/hero-9056658-1600.jpg",
-      "w": 1600,
-      "type": "image/jpeg"
-     }
-    ],
-    "treatment": "cool",
-    "ratio": "16:9",
-    "slot": "hero",
-    "photographer": "Matheus Bertelli",
-    "photographer_url": "https://www.pexels.com/@bertellifotografia",
-    "query": "backyard pool mountains"
-   },
-   {
-    "id": "pexels:11484104",
-    "src": "images/card-11484104-1600.jpg",
-    "alt": "Stainless steel pool ladder leading into a clear blue tiled swimming pool.",
-    "w": 1600,
-    "h": 1066,
-    "class": "stock",
-    "source": "https://www.pexels.com/photo/steel-ladder-to-swimming-pool-11484104/",
-    "licence": "Pexels",
-    "label": "Stock photo",
-    "variants": [
-     {
-      "src": "images/card-11484104-800.avif",
-      "w": 800,
-      "type": "image/avif"
-     },
-     {
-      "src": "images/card-11484104-800.webp",
-      "w": 800,
-      "type": "image/webp"
-     },
-     {
-      "src": "images/card-11484104-800.jpg",
-      "w": 800,
-      "type": "image/jpeg"
-     },
-     {
-      "src": "images/card-11484104-1600.avif",
-      "w": 1600,
-      "type": "image/avif"
-     },
-     {
-      "src": "images/card-11484104-1600.webp",
-      "w": 1600,
-      "type": "image/webp"
-     },
-     {
-      "src": "images/card-11484104-1600.jpg",
-      "w": 1600,
-      "type": "image/jpeg"
-     }
-    ],
-    "treatment": "cool",
-    "ratio": "3:2",
-    "slot": "card",
-    "photographer": "Towfiqu barbhuiya",
-    "photographer_url": "https://www.pexels.com/@towfiqu-barbhuiya-3440682",
-    "query": "pool skimmer net cleaning"
-   }
-  ]
- },
- "sections": [
-  {
-   "type": "hero",
-   "kicker": "Pool & spa care, booked online",
-   "heading": "Clear water. Working equipment.",
-   "sub": "Weekly pool care, seasonal openings and closings, repairs and spa service. Book a visit online.",
-   "secondary": "Ask for a quote",
-   "image": "pexels:9056658"
+  "schema": 2,
+  "slug": "demo-service",
+  "template": "service",
+  "name": "Juniper Flats Pool & Spa",
+  "lang": "en",
+  "title": "Juniper Flats Pool & Spa — Patchlamp's service demo",
+  "description": "Juniper Flats Pool & Spa is Patchlamp's demo service business: book a time, ask for a quote, and change the site by text. Not a real company.",
+  "noindex": true,
+  "demo": true,
+  "bar": {
+    "file": "custom/demo-bar.html"
   },
-  {
-   "type": "proof",
-   "items": [
-    "Same day each week",
-    "Repairs priced before work starts",
-    "Book visits online"
-   ]
+  "cta": {
+    "text": "Book a visit",
+    "short": "Book",
+    "href": "#booking"
   },
-  {
-   "type": "services",
-   "kicker": "Pool & spa service",
-   "heading": "The weekly care. The seasonal work.",
-   "intro": "Keep up with the water, get ready for the season or get equipment repaired.",
-   "items": [
+  "design": {
+    "look": "clear-water",
+    "images": [
+      {
+        "id": "pexels:9056658",
+        "src": "images/hero-9056658-1600.jpg",
+        "alt": "A serene outdoor pool with a wooden deck and hammock surrounded by lush greenery on a sunny day.",
+        "w": 1600,
+        "h": 900,
+        "class": "stock",
+        "source": "https://www.pexels.com/photo/a-swimming-pool-on-a-grassy-field-9056658/",
+        "licence": "Pexels",
+        "label": "Stock photo",
+        "variants": [
+          {
+            "src": "images/hero-9056658-800.avif",
+            "w": 800,
+            "type": "image/avif"
+          },
+          {
+            "src": "images/hero-9056658-800.webp",
+            "w": 800,
+            "type": "image/webp"
+          },
+          {
+            "src": "images/hero-9056658-800.jpg",
+            "w": 800,
+            "type": "image/jpeg"
+          },
+          {
+            "src": "images/hero-9056658-1600.avif",
+            "w": 1600,
+            "type": "image/avif"
+          },
+          {
+            "src": "images/hero-9056658-1600.webp",
+            "w": 1600,
+            "type": "image/webp"
+          },
+          {
+            "src": "images/hero-9056658-1600.jpg",
+            "w": 1600,
+            "type": "image/jpeg"
+          }
+        ],
+        "treatment": "cool",
+        "ratio": "16:9",
+        "slot": "hero",
+        "photographer": "Matheus Bertelli",
+        "photographer_url": "https://www.pexels.com/@bertellifotografia",
+        "query": "backyard pool mountains"
+      },
+      {
+        "id": "pexels:11484104",
+        "src": "images/card-11484104-1600.jpg",
+        "alt": "Stainless steel pool ladder leading into a clear blue tiled swimming pool.",
+        "w": 1600,
+        "h": 1066,
+        "class": "stock",
+        "source": "https://www.pexels.com/photo/steel-ladder-to-swimming-pool-11484104/",
+        "licence": "Pexels",
+        "label": "Stock photo",
+        "variants": [
+          {
+            "src": "images/card-11484104-800.avif",
+            "w": 800,
+            "type": "image/avif"
+          },
+          {
+            "src": "images/card-11484104-800.webp",
+            "w": 800,
+            "type": "image/webp"
+          },
+          {
+            "src": "images/card-11484104-800.jpg",
+            "w": 800,
+            "type": "image/jpeg"
+          },
+          {
+            "src": "images/card-11484104-1600.avif",
+            "w": 1600,
+            "type": "image/avif"
+          },
+          {
+            "src": "images/card-11484104-1600.webp",
+            "w": 1600,
+            "type": "image/webp"
+          },
+          {
+            "src": "images/card-11484104-1600.jpg",
+            "w": 1600,
+            "type": "image/jpeg"
+          }
+        ],
+        "treatment": "cool",
+        "ratio": "3:2",
+        "slot": "card",
+        "photographer": "Towfiqu barbhuiya",
+        "photographer_url": "https://www.pexels.com/@towfiqu-barbhuiya-3440682",
+        "query": "pool skimmer net cleaning"
+      }
+    ]
+  },
+  "sections": [
     {
-     "title": "Weekly service",
-     "text": "Skim, brush, vacuum, test and balance the water, empty the baskets. Same day each week."
+      "type": "hero",
+      "kicker": "Pool & spa care, booked online",
+      "heading": "Clear water. Working equipment.",
+      "sub": "Weekly pool care, seasonal openings and closings, repairs and spa service. Book a visit online.",
+      "secondary": "Ask for a quote",
+      "image": "pexels:9056658",
+      "note": "Open Mon–Fri 8–5 · Sat 9–1"
     },
     {
-     "title": "Openings & closings",
-     "text": "Spring start-up and fall winterizing. Covers, lines, equipment and the first water balance."
+      "type": "proof",
+      "items": [
+        "Same day each week",
+        "Repairs priced before work starts",
+        "Book visits online"
+      ]
     },
     {
-     "title": "Repairs",
-     "text": "Pumps, heaters, filters and automation. You get the price before the work starts."
+      "type": "services",
+      "kicker": "Pool & spa service",
+      "heading": "The weekly care. The seasonal work.",
+      "intro": "Keep up with the water, get ready for the season or get equipment repaired.",
+      "items": [
+        {
+          "title": "Weekly service",
+          "text": "Skim, brush, vacuum, test and balance the water, empty the baskets. Same day each week."
+        },
+        {
+          "title": "Openings & closings",
+          "text": "Spring start-up and fall winterizing. Covers, lines, equipment and the first water balance."
+        },
+        {
+          "title": "Repairs",
+          "text": "Pumps, heaters, filters and automation. You get the price before the work starts."
+        },
+        {
+          "title": "Spa care",
+          "text": "Drain and refill, filter cleaning and a water check for your hot tub."
+        }
+      ]
     },
     {
-     "title": "Spa care",
-     "text": "Drain and refill, filter cleaning and a water check for your hot tub."
+      "type": "about",
+      "kicker": "Juniper Flats",
+      "heading": "Pool care on a regular day.",
+      "paragraphs": [
+        "Weekly service means the same day each week: we skim, brush and vacuum, test and balance the water, and empty the baskets. We also handle spring openings, fall closings and spa care.",
+        "For repairs, we work on pumps, heaters, filters and automation. You get the price before work starts. Have a question? Dana answers, with a reply within one business day."
+      ],
+      "image": "pexels:11484104"
+    },
+    {
+      "type": "booking",
+      "kicker": "Book a visit",
+      "heading": "Pick an open time.",
+      "intro": "Book online. We'll confirm your visit by email or phone the same day."
+    },
+    {
+      "type": "quote",
+      "kicker": "Ask for a quote",
+      "heading": "What needs taking care of?",
+      "intro": "Tell us what your pool or spa needs. We'll get in touch within one business day."
+    },
+    {
+      "type": "cta",
+      "heading": "Pool or spa due for a visit? Pick an open time online."
+    },
+    {
+      "type": "details",
+      "kicker": "Hours & location",
+      "heading": "When and where to find us",
+      "hours": [
+        "Mon–Fri: 8am–5pm",
+        "Sat: 9am–1pm",
+        "Sun: closed"
+      ],
+      "where": "A made-up company, so no address. The real version of this box says where they work.",
+      "contact": "Book a time or ask for a quote above."
     }
-   ]
-  },
-  {
-   "type": "about",
-   "kicker": "Juniper Flats",
-   "heading": "Pool care on a regular day.",
-   "paragraphs": [
-    "Weekly service means the same day each week: we skim, brush and vacuum, test and balance the water, and empty the baskets. We also handle spring openings, fall closings and spa care.",
-    "For repairs, we work on pumps, heaters, filters and automation. You get the price before work starts. Have a question? Dana answers, with a reply within one business day."
-   ],
-   "image": "pexels:11484104"
-  },
-  {
-   "type": "booking",
-   "kicker": "Book a visit",
-   "heading": "Pick an open time.",
-   "intro": "Book online. We'll confirm your visit by email or phone the same day."
-  },
-  {
-   "type": "quote",
-   "kicker": "Ask for a quote",
-   "heading": "What needs taking care of?",
-   "intro": "Tell us what your pool or spa needs. We'll get in touch within one business day."
-  },
-  {
-   "type": "cta",
-   "heading": "Pool or spa due for a visit? Pick an open time online."
-  },
-  {
-   "type": "details",
-   "kicker": "Hours & location",
-   "heading": "When and where to find us",
-   "hours": [
-    "Mon–Fri: 8am–5pm",
-    "Sat: 9am–1pm",
-    "Sun: closed"
-   ],
-   "where": "A made-up company, so no address. The real version of this box says where they work."
-  }
- ]
+  ]
 }
