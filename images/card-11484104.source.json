@@ -1,0 +1,49 @@
+{
+  "id": "pexels:11484104",
+  "src": "images/card-11484104-1600.jpg",
+  "alt": "Stainless steel pool ladder leading into a clear blue tiled swimming pool.",
+  "w": 1600,
+  "h": 1066,
+  "class": "stock",
+  "source": "https://www.pexels.com/photo/steel-ladder-to-swimming-pool-11484104/",
+  "licence": "Pexels",
+  "label": "Stock photo",
+  "slot": "card",
+  "photographer": "Towfiqu barbhuiya",
+  "photographer_url": "https://www.pexels.com/@towfiqu-barbhuiya-3440682",
+  "query": "pool skimmer net cleaning",
+  "variants": [
+    {
+      "src": "images/card-11484104-800.avif",
+      "w": 800,
+      "type": "image/avif"
+    },
+    {
+      "src": "images/card-11484104-800.webp",
+      "w": 800,
+      "type": "image/webp"
+    },
+    {
+      "src": "images/card-11484104-800.jpg",
+      "w": 800,
+      "type": "image/jpeg"
+    },
+    {
+      "src": "images/card-11484104-1600.avif",
+      "w": 1600,
+      "type": "image/avif"
+    },
+    {
+      "src": "images/card-11484104-1600.webp",
+      "w": 1600,
+      "type": "image/webp"
+    },
+    {
+      "src": "images/card-11484104-1600.jpg",
+      "w": 1600,
+      "type": "image/jpeg"
+    }
+  ],
+  "treatment": "cool",
+  "ratio": "3:2"
+}
