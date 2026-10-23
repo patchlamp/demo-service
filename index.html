@@ -144,39 +144,35 @@ put(put(g,slot("booking-slot",s)),el("span",0," "+T(t)+(ex(s)?" · "+ex(s):"")))
         </div>
       </div>
     </section>
-    <section class="section quote quote--card alt" id="quote">
+    <section class="section quote quote--plain alt" id="quote">
       <div class="section-inner">
-        <div class="form-grid">
-          <div class="section-head">
-            <p class="kicker">Ask for a quote</p>
-            <h2>What needs taking care of?</h2>
-            <p class="lede">Tell us what your pool or spa needs. We'll get in touch within one business day.</p>
-          </div>
-          <div class="form-card" data-reveal>
-            <form class="site-form" id="form" action="/api/submissions" method="post">
-              <input type="hidden" name="_form" value="quote">
-              <fieldset class="form-fields">
-                <div class="field-row">
-                  <label>Name <input name="name" required autocomplete="name"></label>
-                  <label>Email <input name="email" type="email" required autocomplete="email"></label>
-                  <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
-                </div>
-                <label>What do you need? <textarea name="message" rows="4" required></textarea></label>
-                <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
-                <button class="btn btn-primary" type="submit">Send</button>
-              </fieldset>
-              <p class="form-thanks" hidden>Thanks — we've got it and we'll be in touch.</p>
-              <p class="form-sorry" hidden>That didn't go through. Please try again.</p>
-              <script>
-                (function () {
-                  var f = document.getElementById("form"), q = location.search;
-                  if (/[?&]sent=0/.test(q) && location.hash === "#form") f.querySelector(".form-sorry").hidden = false;
-                  else if (/[?&]sent=quote/.test(q)) f.querySelector(".form-thanks").hidden = false;
-                })();
-              </script>
-            </form>
-          </div>
+        <div class="section-head">
+          <p class="kicker">Ask for a quote</p>
+          <h2>What needs taking care of?</h2>
+          <p class="lede">Tell us what your pool or spa needs. We'll get in touch within one business day.</p>
         </div>
+        <form class="site-form" id="form" action="/api/submissions" method="post">
+          <input type="hidden" name="_form" value="quote">
+          <fieldset class="form-fields">
+            <div class="field-row">
+              <label>Name <input name="name" required autocomplete="name"></label>
+              <label>Email <input name="email" type="email" required autocomplete="email"></label>
+              <label>Phone <input name="phone" type="tel" autocomplete="tel"></label>
+            </div>
+            <label>What do you need? <textarea name="message" rows="4" required></textarea></label>
+            <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+            <button class="btn btn-primary" type="submit">Send</button>
+          </fieldset>
+          <p class="form-thanks" hidden>Thanks — we've got it and we'll be in touch.</p>
+          <p class="form-sorry" hidden>That didn't go through. Please try again.</p>
+          <script>
+            (function () {
+              var f = document.getElementById("form"), q = location.search;
+              if (/[?&]sent=0/.test(q) && location.hash === "#form") f.querySelector(".form-sorry").hidden = false;
+              else if (/[?&]sent=quote/.test(q)) f.querySelector(".form-thanks").hidden = false;
+            })();
+          </script>
+        </form>
       </div>
     </section>
     <section class="section details details--columns" id="details">

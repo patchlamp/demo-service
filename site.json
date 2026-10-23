@@ -181,7 +181,8 @@
       "type": "quote",
       "kicker": "Ask for a quote",
       "heading": "What needs taking care of?",
-      "intro": "Tell us what your pool or spa needs. We'll get in touch within one business day."
+      "intro": "Tell us what your pool or spa needs. We'll get in touch within one business day.",
+      "variant": "plain"
     },
     {
       "type": "details",
