@@ -79,16 +79,21 @@ how to change it, and how to check a change is live.
   plus where it came from (`source`, `licence`) when it isn't the owner's. A section shows it by id
   (`"image": "id"`, or a gallery's `"images": [ids]`). `class` is `client` for the owner's own photos,
   `stock` or `ai` for anything else. The gallery (and any "our work" slot) shows only `client` pictures,
-  because a stock photo there would pass someone else's work off as theirs; with none it is set in type
-  until the owner sends some. `alt` says plainly what is in the photo; never leave it empty.
+  because a stock photo there would pass someone else's work off as theirs; with none the gallery is
+  left out of the page until the owner sends some. A picture's class is also read from the file's own
+  record (what `img place` or `img stock` wrote beside it), so calling a stock photo `client` doesn't
+  make it one. `alt` says plainly what is in the photo; never leave it empty.
 
 ## How to change things
 
 - **Words** (hours, a service, the tagline, a section's heading): edit `site.json`, `site render
   demo-service`, look at it, then the deploy check below. Ask for anything you don't have.
-- **A new photo**: move it from `incoming/` (one level up; texted photos are already converted and
-  resized) into `images/` with a plain name, add it to `design.images` with `"class": "client"`, and name
-  its id where it goes. The first photos of their own work turn the gallery and the photos page on.
+- **A new photo**: from `incoming/` (one level up; texted photos are already converted and resized), one
+  call a photo: `img treat incoming/<file> --site repos/demo-service --slot hero|gallery|about --alt "…"`. It
+  crops the photo to this look's shape for that place, gives it the look's colour treatment, writes its
+  sizes into `images/`, adds it to `design.images` as theirs (`client`, from the file's own record) and
+  names its id where it goes. The first photos of their own work turn the gallery and the photos page on.
+  The workspace PLAYBOOK (§ Their photos on the site) has the shot list for asking for them.
 - **A design change** is one of three things, smallest first. A token: a colour or a font size in
   `css/custom.css` (`:root { --accent: #0b6e8a; }`). The look: `design.look`, one of the looks in the
   toolbelt's `templates/sites/_looks/` (each is a CSS file and a manifest). A section's layout: its
@@ -98,13 +103,14 @@ how to change it, and how to check a change is live.
 - **A one-off** the library doesn't have: `css/custom.css` for style, and for markup a block in
   `custom/<name>.html`, placed with `{"type": "custom", "file": "custom/<name>.html"}` in `sections`. The
   render places it exactly as written, so it has to follow this file's rules on its own (plain HTML, no
-  `onclick=`, no `<script src>` from another site). Keep `custom.css` to about 80 lines: past that it is a
+  `onclick=`, no `<script src>` from another site), and a picture in it must be one listed in
+  `design.images` (the render refuses any other, naming the file). Keep `custom.css` to about 80 lines: past that it is a
   look of its own, and a stylesheet that grows one request at a time is the drift the renderer replaced.
   `site render` says when it is over.
 - **When a one-off proves itself** (the owner likes it, it has lasted a few edits, another business could
-  use it), ask for it to join the library rather than copying it to another site: say so in the reply
-  and add `FORWARD-TO-TAYLOR: promote custom/<name>.html (or custom.css) from demo-service into the site
-  library`. A session then moves it into `_sections/` or `_looks/` with its hook test and a before-and-after
+  use it), ask for it to join the library rather than copying it to another site: note it in the
+  workspace's `NOTES.md` (which block, and why it earned its place), say so in the reply, and add
+  `FORWARD-TO-TAYLOR: promote custom/<name>.html (or custom.css) from demo-service into the site library`. A session then moves it into `_sections/` or `_looks/` with its hook test and a before-and-after
   screenshot, and every site can use it.
 - **A new page**: the renderer makes the home page, the photos page and the 404 page and no others yet.
   Say so plainly and FORWARD-TO-TAYLOR the ask with what the page would hold.
