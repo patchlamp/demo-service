@@ -173,13 +173,14 @@ a:hover { color: var(--link-hover); text-decoration-thickness: 2px; }
   --bg-raised: color-mix(in srgb, var(--hero-ink) 11%, var(--hero-ground));
   --bg-line: color-mix(in srgb, var(--hero-ink) 24%, transparent);
 }
-.contact-card, .cta--band {
+.contact-card, .cta--band, .donate--band {
   background: var(--accent); color: var(--accent-ink);
-  --ink: var(--accent-ink); --ink-dim: color-mix(in srgb, var(--accent-ink) 82%, var(--accent));
+  /* 90% and a 10% lift: at 82% and 14% the dim text failed AA on its own raised tile in three looks (B256) */
+  --ink: var(--accent-ink); --ink-dim: color-mix(in srgb, var(--accent-ink) 90%, var(--accent));
   --accent-text: var(--accent-ink); --link-hover: var(--accent-ink); --focus: var(--accent-ink);
   --bg: color-mix(in srgb, var(--accent-ink) 8%, var(--accent));
   --bg-alt: var(--bg);
-  --bg-raised: color-mix(in srgb, var(--accent-ink) 14%, var(--accent));
+  --bg-raised: color-mix(in srgb, var(--accent-ink) 10%, var(--accent));
   --bg-line: color-mix(in srgb, var(--accent-ink) 30%, transparent);
 }
 
@@ -272,6 +273,7 @@ figure img { filter: var(--photo-filter); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--space-2); }
 .hero-actions:empty { display: none; }
 .hero-note { margin-top: var(--space); font-size: var(--step--1); font-weight: 600; color: var(--ink-dim); }
+.hero-phone { margin-top: var(--space); }   /* a step under the buttons, so the number reads as its own way in */
 .hero-phone a {
   display: inline-block; padding-block: 0.3rem; color: inherit; text-decoration: none;
   font: var(--heading-weight) var(--step-2)/1.1 var(--font-display); letter-spacing: var(--display-tracking);
@@ -286,7 +288,17 @@ figure img { filter: var(--photo-filter); }
   background: var(--bg-raised); border-radius: var(--radius-card); box-shadow: var(--shadow-2);
 }
 @media (min-width: 60em) {
-  .hero--band-card .hero-copy { margin-left: max(var(--page-pad), calc((100vw - var(--content)) / 2)); }
+  /* wide, the photo runs the hero's full height and the card sits on its lower left, overhanging its foot, so the
+     band beside the card is picture rather than an empty strip of page (the B257 judge, ten previews, and B256's
+     Apron Strings: "the right half beside the hero card is empty") */
+  .hero--band-card { display: grid; padding-bottom: var(--space-4); }
+  .hero--band-card > .hero-media, .hero--band-card > .hero-copy { grid-area: 1 / 1; }
+  .hero--band-card .hero-media { height: clamp(24rem, 38vw, 32rem); }
+  .hero--band-card .hero-copy { align-self: end; width: calc(100% - 2 * var(--page-pad));
+    margin: 0 0 calc(-1 * var(--space-3)) max(var(--page-pad), calc((100vw - var(--content)) / 2)); }
+  /* the card is a frame of its own: its heading a step under the full-bleed heroes', so the action stays on the
+     first desktop screen */
+  .hero--band-card .hero-heading { font-size: var(--step-4); max-width: 16ch; }
 }
 
 /* hero--split: the words on the hero ground, the photo beside them (under them on a phone) */
@@ -345,12 +357,14 @@ figure img { filter: var(--photo-filter); }
 .hero--typographic .hero-heading { font-size: var(--step-6); max-width: 14ch; margin: 0; }
 .hero--typographic .hero-aside .hero-actions { margin-top: var(--space); }
 .hero--typographic .hero-note { margin: 0; padding-top: var(--space); border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+/* Wide, the line and the buttons sit under the heading on its left edge (the eye goes down, not across to a lower
+   corner: the B257 judge, ten previews), and the hours note and the phone take the right column beside them. */
 @media (min-width: 60em) {
   .hero--typographic .hero-copy { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--space-4); }
   .hero--typographic .hero-kicker, .hero--typographic .hero-heading { grid-column: 1 / -1; }
-  .hero--typographic .hero-aside { grid-column: 2; grid-row: 3; }
-  .hero--typographic .hero-note, .hero--typographic .hero-phone { grid-column: 1; grid-row: 3; align-self: end; }
-  .hero--typographic .hero-note + .hero-phone { grid-row: 4; }
+  .hero--typographic .hero-aside { grid-column: 1; grid-row: 3 / span 2; }
+  .hero--typographic .hero-note, .hero--typographic .hero-phone { grid-column: 2; grid-row: 3; align-self: end; }
+  .hero--typographic .hero-note + .hero-phone { grid-row: 4; align-self: start; }
 }
 
 /* --- Proof: the line under the hero (rating, area, hours) ---------------- */
@@ -365,6 +379,7 @@ figure img { filter: var(--photo-filter); }
   font-size: var(--step--1); font-weight: 600; line-height: 1.3;
 }
 .proof--strip li::before { content: ""; flex: none; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--proof-mark); }
+@media (max-width: 29.99em) { .proof--strip .proof-list { grid-template-columns: 1fr; } }   /* a phone: one a line, never two and one stranded (the B256 judge) */
 @media (min-width: 48em) { .proof--strip .proof-list { grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); font-size: var(--step-0); } }
 /* proof--inline: one typeset line between rules, on the page ground */
 .proof--inline { padding: 0 var(--page-pad); }
@@ -389,9 +404,12 @@ figure img { filter: var(--photo-filter); }
 .lede { font-size: var(--step-1); line-height: 1.5; color: var(--ink-dim); max-width: 30em; }
 .section-media { margin: var(--space-2) 0 0; }
 .section-media img, .about-media img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius-media); }
+/* A preview's note on how a section was written (the services' "from the category on their Google listing"): under
+   the list, small and quiet, because the first thing a customer reads in the section is the services, not how the
+   page was made (the B257 judge, ten previews). */
 .preview-caveat {
-  margin-top: var(--space); padding: 0.75rem 1rem; border-left: 3px solid var(--accent);
-  background: var(--bg-raised); color: var(--ink-dim); font-size: var(--step--1);
+  margin-top: var(--space-2); padding: 0.1rem 0 0.1rem 0.75rem; border-left: 2px solid var(--bg-line);
+  color: var(--ink-dim); font-size: var(--step--2); max-width: 40em;
 }
 
 /* --- Services ----------------------------------------------------------- */
@@ -410,6 +428,7 @@ figure img { filter: var(--photo-filter); }
 .services--numerals .service-list h3 { margin-top: 0.2rem; }
 @media (min-width: 40em) { .services--numerals .service-list { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 60em) {
+  .services--numerals .preview-caveat { grid-column: 2; }
   .services--numerals .section-inner { grid-template-columns: 5fr 7fr; align-items: start; column-gap: var(--space-4); }
   .services--numerals .section-head { position: sticky; top: 6rem; }
   .services--numerals .service-list { padding-top: var(--space-half); }
@@ -449,19 +468,21 @@ figure img { filter: var(--photo-filter); }
 
 /* --- About -------------------------------------------------------------- */
 .about-grid { display: grid; gap: var(--space-3); align-items: center; }
-.about-copy h2 { margin-bottom: var(--space); }
-.about-copy p + p { margin-top: var(--space); }
-.about-copy .lede { color: var(--ink); }
+.about-head h2 { margin-bottom: var(--space); }
+.about-body p + p { margin-top: var(--space); }
+.about-body .lede { color: var(--ink); }
 .about-media { margin: 0; }
 @media (min-width: 60em) {
   .about-grid.has-image { grid-template-columns: 6fr 5fr; gap: var(--space-4); }
-  /* no picture: the heading and lede across, the rest in two columns, so the right half isn't empty */
-  .about-grid:not(.has-image) .about-copy { columns: 2; column-gap: var(--space-4); }
-  .about-grid:not(.has-image) .about-copy > :is(.kicker, h2, .lede) { column-span: all; }
-  .about-grid:not(.has-image) .about-copy .lede { max-width: 36em; margin-bottom: var(--space-2); }
-  .about-grid:not(.has-image) .about-copy p:not(.lede) { margin-top: 0; margin-bottom: var(--space); break-inside: avoid; }
+  /* no picture: the heading on the left, the words on the right, so a short about isn't one sentence across an
+     empty width (the B257 judge, ten previews) */
+  .about-grid:not(.has-image) .about-copy { display: grid; grid-template-columns: 5fr 7fr; column-gap: var(--space-4); align-items: start; }
+  .about-grid:not(.has-image) .about-head h2 { margin-bottom: 0; }
+  .about-grid:not(.has-image) .about-body { padding-top: 0.4rem; }
 }
 .about--band .about-media img { box-shadow: 0 30px 60px -24px rgb(0 0 0 / 0.5); }
+/* a band with no picture is short: its words, not a tall field of colour */
+.about--band:has(.about-grid:not(.has-image)) { padding-block: var(--space-4); }
 
 /* --- Gallery ------------------------------------------------------------ */
 .gallery-grid { list-style: none; display: grid; gap: 0.75rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -490,6 +511,11 @@ figure img { filter: var(--photo-filter); }
   scrollbar-width: thin; scrollbar-color: var(--bg-line) transparent;
 }
 .gallery-strip li { flex: 0 0 min(78vw, 24rem); scroll-snap-align: start; }
+.gallery-caption { margin-top: 0.5rem; font-size: var(--step--1); color: var(--ink-dim); }   /* an image's own caption, when site.json gives one */
+@media (min-width: 48em) {
+  .gallery--grid .gallery-grid li:first-child:nth-last-child(3n) figure { display: flex; flex-direction: column; }
+  .gallery--grid .gallery-grid li:first-child:nth-last-child(3n) picture { display: block; flex: 1; min-height: 0; }
+}
 .gallery-more { margin-top: var(--space-2); }
 .gallery-more a { display: inline-block; padding: 0.4rem 0; font-weight: 600; }
 .gallery-empty { color: var(--ink-dim); }
@@ -500,6 +526,12 @@ figure img { filter: var(--photo-filter); }
 @media (min-width: 60em) {
   .form-grid { grid-template-columns: 5fr 7fr; gap: var(--space-4); }
   .form-grid .section-head { position: sticky; top: 6rem; }
+  /* a short form sits level with its heading and keeps its fields on one row, so neither column is left with an
+     empty half (the booking calendar is tall, and keeps its heading in view instead) */
+  :is(.quote--card, .signup--card) .form-grid { align-items: center; }
+  :is(.quote--card, .signup--card) .form-grid .section-head { position: static; }
+  :is(.quote--card, .signup--card) .field-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  :is(.quote--card, .signup--card) .field-row label:last-child:nth-child(odd) { grid-column: auto; }
 }
 .form-card {
   position: relative; background: var(--bg-raised); color: var(--ink);
@@ -507,7 +539,10 @@ figure img { filter: var(--photo-filter); }
 }
 .site-form { position: relative; display: grid; gap: 1rem; min-width: 0; }
 .form-fields { border: 0; display: grid; gap: 1rem; min-width: 0; }
-.form-fields[disabled] { opacity: 0.62; }
+/* A preview's form is shown switched off: the fields go quiet and the note says why, but the button keeps its own
+   colour, so it reads as the page's action rather than as broken (the B257 judge, ten previews). */
+.form-fields[disabled] :is(label, .booking-slots, .field-row) { opacity: 0.62; }
+.form-fields[disabled] .btn { cursor: not-allowed; }
 .site-form label { display: grid; gap: 0.35rem; font-size: var(--step--1); font-weight: 600; }
 .field-row { display: grid; gap: 1rem; }
 @media (min-width: 40em) {
@@ -589,16 +624,17 @@ figure img { filter: var(--photo-filter); }
 }
 
 /* --- Quote ---------------------------------------------------------------- */
-/* quote--plain: the head across, the form straight on the ground under a rule */
-@media (min-width: 60em) {
-  .quote--plain .section-head.section-head { max-width: none; display: grid; grid-template-columns: 7fr 5fr; column-gap: var(--space-4); align-items: start; }
-  .quote--plain .section-head > * { grid-column: 1; }
-  .quote--plain .section-head > .section-media { grid-column: 2; grid-row: 1 / span 6; margin: 0; }
-}
-.quote--plain .site-form { padding-top: var(--space-2); border-top: var(--rule-strong); }
+/* quote--plain (and signup--plain): no card; the form straight on the ground under a rule, beside its heading wide
+   (a form across the whole width left its notice stranded at the left: the B257 judge) */
+:is(.quote--plain, .signup--plain) .site-form { padding-top: var(--space-2); border-top: var(--rule-strong); }
 @media (min-width: 48em) {
-  .quote--plain .field-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .quote--plain .field-row label:last-child:nth-child(odd) { grid-column: auto; }
+  :is(.quote--plain, .signup--plain) .field-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  :is(.quote--plain, .signup--plain) .field-row label:last-child:nth-child(odd) { grid-column: auto; }
+}
+@media (min-width: 60em) {
+  :is(.quote--plain, .signup--plain) .section-inner { display: grid; grid-template-columns: 5fr 7fr; column-gap: var(--space-4); align-items: start; }
+  :is(.quote--plain, .signup--plain) .section-head { margin: 0; }
+  :is(.quote--plain, .signup--plain) .section-media { margin-top: var(--space-2); }
 }
 
 /* --- Contact -------------------------------------------------------------- */
@@ -629,7 +665,7 @@ figure img { filter: var(--photo-filter); }
 .hours-table li + li { margin-top: 0; }
 .details-side p { font-size: var(--step-1); }
 .details-side .details-label:not(:first-child) { margin-top: var(--space-2); }
-@media (min-width: 56em) { .details--table .details-grid { grid-template-columns: 7fr 5fr; gap: var(--space-4); align-items: end; } }
+@media (min-width: 56em) { .details--table .details-grid { grid-template-columns: 7fr 5fr; gap: var(--space-4); align-items: start; } }   /* start: a long hours list left the side column floating low (the B256 store) */
 
 /* --- The call to action band ---------------------------------------------- */
 .cta--band { padding: var(--space-4) var(--page-pad); }
@@ -646,6 +682,144 @@ figure img { filter: var(--photo-filter); }
   .cta--band .section-inner > :not(.action-row) { grid-column: 1; }
   .cta--band .action-row { grid-column: 2; grid-row: 1 / span 3; justify-content: flex-end; margin: 0; }
 }
+
+/* --- Work: the portfolio's pieces (a proof slot: only the owner's own pictures; without them, set in type) --- */
+.work-list { list-style: none; display: grid; gap: var(--space-3) var(--space-2); }
+.work-item h3 { margin-top: 0.9rem; }
+.work-item p { color: var(--ink-dim); margin-top: 0.3rem; }
+.work-media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-media); background: var(--bg-alt); }
+/* work--grid: the pieces side by side, a caption under each */
+@media (min-width: 40em) { .work--grid .work-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 64em) { .work--grid .work-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* work--index: one piece a row, large, its number and title set beside it; the rows alternate sides */
+.work--index .work-list { gap: var(--space-4); }
+.work--index .work-item { display: grid; gap: var(--space); }
+.work--index .work-caption { display: grid; gap: 0.35rem; align-content: end; }
+.work--index .work-n { font: var(--display-weight) var(--step-2)/1 var(--font-display); color: var(--accent-text); font-variant-numeric: lining-nums tabular-nums; }
+.work--index .work-item h3 { margin: 0; font-size: var(--step-3); line-height: var(--display-leading); }
+@media (min-width: 48em) {
+  .work--index .work-item { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--space-3); align-items: end; }
+  .work--index .work-item:nth-child(even) .work-media { order: 2; }
+}
+/* work--typographic: no pictures of their own yet; an index of the pieces, a rule above each */
+.work--typographic .work-list { gap: 0; }
+.work--typographic .work-item { display: grid; grid-template-columns: 3rem minmax(0, 1fr); column-gap: var(--space); padding: 1.1rem 0 1.4rem; border-top: var(--rule-strong); }
+.work--typographic .work-item:last-child { border-bottom: 1px solid var(--bg-line); }
+.work--typographic .work-n { grid-row: span 2; font: var(--display-weight) var(--step-1)/1.2 var(--font-display); color: var(--accent-text); }
+.work--typographic .work-item h3 { margin: 0; font-size: var(--step-2); }
+.work--typographic .work-item p { grid-column: 2; }
+@media (min-width: 48em) {
+  .work--typographic .work-item { grid-template-columns: 5rem minmax(0, 1.2fr) minmax(0, 1fr); align-items: baseline; }
+  .work--typographic .work-n { grid-row: auto; }
+  .work--typographic .work-item p { grid-column: 3; margin: 0; }
+}
+
+/* --- Menu and shop: a few of the products on the home page, the rest on menu.html / shop.html ---------------- */
+.catalog-strip { list-style: none; display: grid; gap: 0 var(--space-3); }
+.catalog-item { padding: 0.9rem 0 1.1rem; border-top: 1px solid var(--bg-line); }
+.catalog-cat {
+  margin-bottom: 0.3rem; font: var(--kicker-weight) var(--kicker-size)/1.3 var(--font-kicker);
+  text-transform: var(--kicker-case); letter-spacing: var(--kicker-tracking); color: var(--accent-text);
+}
+.shop-name { display: flex; gap: 0.75rem; justify-content: space-between; align-items: baseline; font-weight: 600; max-width: none; }
+.price { font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.catalog-item .muted, .shop-text .muted { font-size: var(--step--1); margin-top: 0.2rem; }
+.catalog-more { margin-top: var(--space-2); }
+.shop-out { color: var(--ink-dim); font-size: var(--step--1); white-space: nowrap; }
+.is-sold-out .shop-name { color: var(--ink-dim); }
+/* menu--board: the dark band as a menu board, each dish joined to its price by a dotted leader */
+.menu--board .shop-name { font: var(--heading-weight) var(--step-1)/1.2 var(--font-display); text-transform: var(--display-case); }
+.menu--board .shop-name > span:first-child { display: flex; flex: 1; align-items: baseline; gap: 0.5rem; min-width: 0; }
+.menu--board .shop-name > span:first-child::after { content: ""; flex: 1; min-width: 1.5rem; border-bottom: 2px dotted var(--bg-line); }
+.menu--board .catalog-item { border-top-color: transparent; }
+@media (min-width: 56em) {
+  .menu--board .section-inner { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: var(--space-4); align-items: start; }
+  .menu--board .section-head { margin: 0; }
+  .menu--board .catalog-strip { grid-template-columns: 1fr 1fr; }
+  .menu--board .catalog-more { grid-column: 2; }
+}
+/* menu--list (and shop--list): ruled on the page ground, the name and price set large */
+:is(.menu--list, .shop--list) .shop-name { font: var(--heading-weight) var(--step-2)/1.15 var(--font-display); text-transform: var(--display-case); }
+:is(.menu--list, .shop--list) .price { font-family: var(--font-text); font-size: var(--step-1); color: var(--accent-text); }
+@media (min-width: 48em) { :is(.menu--list, .shop--list) .catalog-strip { grid-template-columns: 1fr 1fr; } }
+/* shop--shelf: the products in a row of solid tiles, the price under the name */
+.shop--shelf .catalog-strip { grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 4px; }
+.shop--shelf .catalog-item { display: grid; align-content: start; gap: 0.35rem; padding: 1.25rem 1.25rem 1.5rem; border: 0; background: var(--bg-raised); }
+.shop--shelf.alt .catalog-item { background: var(--bg); }
+.shop--shelf .shop-name { flex-direction: column; gap: 0.3rem; font: var(--heading-weight) var(--step-1)/1.2 var(--font-display); text-transform: var(--display-case); }
+.shop--shelf .price { font: 650 var(--step-0)/1.2 var(--font-text); color: var(--accent-text); }
+/* the page with everything: the list by section, the basket and checkout beside it */
+.page-title { font-size: var(--step-5); line-height: var(--display-leading); margin-bottom: var(--space); }
+.catalog--page { padding-top: var(--space-4); }
+.shop-grid { display: grid; gap: var(--space-3); align-items: start; }
+@media (min-width: 60em) {
+  .shop-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--space-4); }
+  .shop-checkout { position: sticky; top: 6rem; }
+}
+.shop-section { margin: var(--space-2) 0 0.4rem; font-size: var(--step-2); }
+.shop-section:first-child { margin-top: 0; }
+.shop-list { list-style: none; }
+.shop-item { display: flex; gap: 1rem; align-items: center; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid var(--bg-line); }
+.shop-text { flex: 1 1 auto; min-width: 0; }
+.shop-qty { display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+.shop-qty button {
+  width: 2.75rem; height: 2.75rem; font: 600 var(--step-1)/1 var(--font-text); color: var(--ink); cursor: pointer;
+  background: var(--bg-raised); border: 1px solid var(--bg-line); border-radius: var(--radius);
+}
+.shop-qty span { min-width: 1.5rem; text-align: center; }
+.shop-checkout h3 { margin-bottom: 0.25rem; }
+.shop-checkout .btn[disabled] { cursor: not-allowed; opacity: 0.75; }
+.shop-pay-note { font-size: var(--step--1); }
+.open-now { font-weight: 650; margin-bottom: 0.35rem; }
+.open-now.is-open { color: var(--accent-text); }
+.hours-live ul { list-style: none; }
+.details--table .hours-live li {
+  padding: 0.55rem 0; border-bottom: var(--rule-strong);
+  font: var(--heading-weight) var(--step-2)/1.2 var(--font-display); text-transform: var(--display-case);
+}
+
+/* --- Events: what's on, a rule above each ------------------------------------ */
+.event-list { list-style: none; display: grid; }
+.event-list li { display: grid; gap: 0.3rem; padding: 1.1rem 0 1.3rem; border-top: var(--rule-strong); }
+.event-list li:last-child { border-bottom: 1px solid var(--bg-line); }
+.event-list h3 { margin: 0; }
+.event-when { font-size: var(--step--1); font-weight: 650; color: var(--accent-text); }
+.event-text { color: var(--ink-dim); }
+/* events--ruled: the when, the what and the line in three columns wide */
+@media (min-width: 48em) {
+  .events--ruled .event-list li { grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 5fr); column-gap: var(--space-2); align-items: baseline; }
+  .events--ruled .event-list h3 { font-size: var(--step-2); }
+}
+/* events--agenda: the when set large, the head beside the list */
+.events--agenda .event-when {
+  font: var(--heading-weight) var(--step-2)/1.15 var(--font-display); letter-spacing: var(--display-tracking);
+  text-transform: var(--display-case);
+}
+@media (min-width: 60em) {
+  .events--agenda .section-inner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: var(--space-4); align-items: start; }
+  .events--agenda .section-head { position: sticky; top: 6rem; margin: 0; }
+  .events--agenda .event-list { grid-template-columns: 1fr 1fr; column-gap: var(--space-2); }
+  .events--agenda .event-list li:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid var(--bg-line); }
+}
+
+/* --- Donate: the giving button (a link to their own giving page) ----------------- */
+.donate--band { padding: var(--space-4) var(--page-pad); }
+.donate--band .section-inner { display: grid; gap: var(--space); }
+.donate--band h2 { max-width: 16ch; }
+.donate--band .kicker, .donate--band h2 { margin: 0; }
+.donate--band .action-row { margin-top: var(--space); }
+.donate--band .btn-primary { background: var(--accent-ink); color: var(--accent); }
+.donate--band .btn-primary:hover { background: color-mix(in srgb, var(--accent-ink) 88%, var(--accent)); color: var(--accent); }
+@media (min-width: 60em) {
+  .donate--band .section-inner { grid-template-columns: 7fr 5fr; column-gap: var(--space-4); align-items: end; }
+  .donate--band .section-inner > :not(.action-row) { grid-column: 1; }
+  .donate--band .action-row { grid-column: 2; grid-row: 1 / span 4; justify-content: flex-end; margin: 0; }
+}
+.donate-grid { display: grid; gap: var(--space); padding-top: var(--space-2); border-top: var(--rule-strong); }
+.donate-grid .section-head { margin: 0; }
+.donate-copy p + p { margin-top: var(--space); }
+.donate-copy .action-row { margin-top: var(--space-2); }
+@media (min-width: 60em) { .donate-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: var(--space-4); align-items: start; } }
 
 /* --- The photos page's head ---------------------------------------------- */
 .page-head { padding: var(--space-4) var(--page-pad) 0; }
