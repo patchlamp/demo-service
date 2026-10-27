@@ -3,7 +3,7 @@
 This repo IS the website for Juniper Flats Pool & Spa. There is no dashboard and no CMS. The site is one file,
 `site.json`: its words, its sections in order, and its design. `site render demo-service` writes the pages
 from it. You change the site by changing `site.json` (or the two places below that are yours to write),
-rendering, looking, and publishing. Live at https://demo-service.patchlamp.site/.
+rendering, looking, and publishing. Live at https://demo-service.pages.dev/.
 
 How to talk to the client, how texted photos arrive (`incoming/`, one level
 up), and what counts as Taylor's work are all in the workspace `CLAUDE.md`
@@ -39,8 +39,7 @@ how to change it, and how to check a change is live.
   the published site.
 - `images/` holds the photos. `_headers` and `_redirects` are read by the host, not served: `_headers`
   makes every page `no-cache`; `_redirects` is for a page that moved. Leave both alone otherwise.
-- **No trackers, no ads, no cookie banners, and no checkout but the catalog's own** (a store's or a
-  restaurant's Stripe Checkout on the owner's account, on its `shop.html` or `menu.html`). The one count is
+- **No trackers, no ads, no cookie banners, no checkout.** The one count is
   patchlamp.com/hit.js: a page load's path and the site that linked to it,
   nothing about the visitor (no cookie, no address, no identifier), so the
   owner sees how many and from where, never who. The only
@@ -113,10 +112,8 @@ how to change it, and how to check a change is live.
   workspace's `NOTES.md` (which block, and why it earned its place), say so in the reply, and add
   `FORWARD-TO-TAYLOR: promote custom/<name>.html (or custom.css) from demo-service into the site library`. A session then moves it into `_sections/` or `_looks/` with its hook test and a before-and-after
   screenshot, and every site can use it.
-- **A new page**: the renderer makes the home page, the photos page and the 404 page. A page of sections of
-  its own is an entry in `site.json`'s `pages` (`{"slug", "title", "head": {"heading", "intro"}, "sections": […]}`,
-  rendered as `<slug>.html` in the same shell); for anything else, say so plainly and FORWARD-TO-TAYLOR the ask
-  with what the page would hold.
+- **A new page**: the renderer makes the home page, the photos page and the 404 page and no others yet.
+  Say so plainly and FORWARD-TO-TAYLOR the ask with what the page would hold.
 - **A link** (Instagram, a booking site, a menu on another service): add it to the `links` of the
   `details` or `contact` section in `site.json` (`{"text": "Instagram", "href": "https://…"}`). Linking out
   is always fine; embedding third-party code is not, except a plain `<iframe>` embed from a service the
@@ -149,7 +146,7 @@ around the gate is worse than one that waits a day.
 
 ## Every change goes live — deploy check
 
-"Done" means live at https://demo-service.patchlamp.site/, not edited on disk. Relay sessions run from the client workspace one
+"Done" means live at https://demo-service.pages.dev/, not edited on disk. Relay sessions run from the client workspace one
 level up, so git takes the form `git -C repos/demo-service …`; never `cd` into the repo first (that is
 always blocked). After any requested change, without waiting to be asked:
 
@@ -168,9 +165,9 @@ always blocked). After any requested change, without waiting to be asked:
 6. Confirm the live site serves the change, with exactly this shape (no pipe, no redirect, and no
    `.html` on the end: the host redirects those, so `curl` would read the redirect instead of the page):
 
-       curl -s https://demo-service.patchlamp.site/PAGE
+       curl -s https://demo-service.pages.dev/PAGE
 
-   (for the home page, `curl -s https://demo-service.patchlamp.site/`). Read the output and look for the new content yourself. Only
+   (for the home page, `curl -s https://demo-service.pages.dev/`). Read the output and look for the new content yourself. Only
    say it's live once you have seen it there. Every page is served `no-cache`, so a phone that reloads
    sees the new page.
 
